@@ -24,6 +24,16 @@ Se consulta el catalogo para obtener información pertinente del artículo(ej. e
 
 Se consulta información del carrito por ID para obtener el monto total.
 
+### Node 8
+
+Seguir los pasos de instalación del sitio oficial
+
+[nodejs.org](https://nodejs.org/en/)
+
+### MongoDb
+
+Ver tutorial de instalación en [README.md](../README.md) en la raíz.
+
 ## Apidoc
 
 Apidoc es una herramienta que genera documentación de apis para proyectos node (ver [Apidoc](http://apidocjs.com/)).
