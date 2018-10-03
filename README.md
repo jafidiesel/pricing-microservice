@@ -1,26 +1,26 @@
 # CurrencyExchange-Microservice
 El conversor de moneda nos permitirá convertir un monto de una moneda a otra. Esto se puede lograr de varias formas:
 
--Convertir un monto especificando de una moneda B a una moneda A
--Convertir un el precio de un articulo a una moneda B
--Convertir el monto total de un carrito a una moneda B
+- Convertir un monto especificando de una moneda B a una moneda A
+- Convertir un el precio de un articulo a una moneda B
+- Convertir el monto total de un carrito a una moneda B
 
 Además nos permitirá:
 
--Obtener la última cotización de una moneta B con respecto a una moneda A
--Realizar ABM de monedas
+- Obtener la última cotización de una moneta B con respecto a una moneda A
+- Realizar ABM de monedas
 
-##Dependencias
+## Dependencias
 
-###Auth
+### Auth
 
 Para realizar cualquier acción es necesario estar logueado.
 
-###Catalog
+### Catalog
 
 Se consulta el catalogo para obtener información pertinente del artículo(ej. el monto y la moneda)
 
-###Cart
+### Cart
 
 Se consulta información del carrito por ID para obtener el monto total.
 
