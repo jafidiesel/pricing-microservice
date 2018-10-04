@@ -49,6 +49,7 @@ Authorization=bearer {token}
 Respuesta
 
 ```
+HTTP/1.1 200 OK
 {
     "idMoneda": "{idMoneda}",  
     "codigoNumericoMoneda": "{codigoNumericoMoneda}",
@@ -123,6 +124,7 @@ Authorization=bearer {token}
 Respuesta
 
 ```
+HTTP/1.1 200 OK
 {
     "idMoneda": "{idMoneda}",
     "codigoNumericoMoneda": "{codigoNumericoMoneda}",
@@ -187,6 +189,7 @@ Authorization=bearer {token}
 Respuesta
 
 ```
+HTTP/1.1 200 OK
 {
     "idMoneda": "{idMoneda}",
     "codigoNumericoMoneda": "{codigoNumericoMoneda}",
@@ -263,6 +266,7 @@ Authorization=bearer {token}
 Respuesta
 
 ```
+HTTP/1.1 200 OK
 {
     "idMoneda": "{idMoneda}",
     "codigoNumericoMoneda": "{codigoNumericoMoneda}",
@@ -342,6 +346,7 @@ Authorization=bearer {token}
 Respuesta
 
 ```
+HTTP/1.1 200 OK
 {
     "idMoneda": "{idMoneda}",
     "codigoNumericoMoneda": "{codigoNumericoMoneda}",
@@ -487,6 +492,7 @@ Authorization=bearer {token}
 Respuesta
 
 ```
+HTTP/1.1 200 OK
 {
     "idMoneda": "{idMoneda}",
     "codigoNumericoMoneda": "{codigoNumericoMoneda}",
