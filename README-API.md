@@ -23,8 +23,9 @@ Microservicio de Cambio de Moneda
 
 <p>Convierte un monto enviado de una moneda especificada a otra moneda especificada</p>
 
+```
 	GET /v1/exchange/:monto/:monedaOrigen/:monedaDestino
-
+```
 
 
 ### Examples
@@ -98,8 +99,9 @@ HTTP/1.1 500 Server Error
 
 <p>Convierte el monto de un artículo especificado a una moneda determinada</p>
 
+```
 	GET /v1/articles/:articleId/:monedaDestino
-
+```
 
 
 ### Examples
@@ -172,8 +174,9 @@ HTTP/1.1 500 Server Error
 
 <p>Obtiene el monto total del carrito y lo convierte a la moneda especificada.</p>
 
+```
 	GET /v1/cart/:cartId/:monedaDestino
-
+```
 
 
 ### Examples
@@ -241,8 +244,9 @@ HTTP/1.1 500 Server Error
 
 <p>Obtiene la cotización actual de una moneda con respecto a otra</p>
 
+```
   GET /v1/exchange/:monedaOrigen/:monedaDestino
-
+```
 
 
 ### Examples
@@ -318,7 +322,9 @@ HTTP/1.1 500 Server Error
 
 <p>Da de alta una nueva moneda. Se requiere rol de administrador.</p>
 
+```
   POST /v1/exchange/
+```
 
 
 
@@ -396,8 +402,9 @@ HTTP/1.1 500 Server Error
 
 <p>Da de baja una moneda. Se requiere rol de administrador.</p>
 
+```
   POST /v1/exchange/
-
+```
 
 
 ### Examples
@@ -464,8 +471,9 @@ HTTP/1.1 500 Server Error
 
 <p>Realiza una modificación a una moneda. Se requiere rol de administrador.</p>
 
+```
   POST /v1/exchange/
-
+```
 
 
 ### Examples
