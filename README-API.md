@@ -50,10 +50,11 @@ Respuesta
 
 ```
 {
-  "montoConvertido": "{montoConvertido}",
-  "abreviaturaMoneda": "{abreviaturaMoneda}",
-  "simboloMoneda": "{simboloMoneda}",
-  "codigoNumericoMoneda": "{codigoNumericoMoneda}"
+    "idMoneda": "{idMoneda}",  
+    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
+    "montoConvertido": "{montoConvertido}",
+    "abreviaturaMoneda": "{abreviaturaMoneda}",
+    "simboloMoneda": "{simboloMoneda}"
 }
 ```
 
@@ -123,10 +124,11 @@ Respuesta
 
 ```
 {
-  "montoConvertido": "{montoConvertido}",
-  "abreviaturaMoneda": "{abreviaturaMoneda}",
-  "simboloMoneda": "{simboloMoneda}",
-  "codigoNumericoMoneda": "{codigoNumericoMoneda}"
+    "idMoneda": "{idMoneda}",
+    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
+    "montoConvertido": "{montoConvertido}",
+    "abreviaturaMoneda": "{abreviaturaMoneda}",
+    "simboloMoneda": "{simboloMoneda}"
 }
 ```
 
@@ -186,10 +188,11 @@ Respuesta
 
 ```
 {
-  "montoConvertido": "{montoConvertido}",
-  "abreviaturaMoneda": "{abreviaturaMoneda}",
-  "simboloMoneda": "{simboloMoneda}",
-  "codigoNumericoMoneda": "{codigoNumericoMoneda}"
+    "idMoneda": "{idMoneda}",
+    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
+    "montoConvertido": "{montoConvertido}",
+    "abreviaturaMoneda": "{abreviaturaMoneda}",
+    "simboloMoneda": "{simboloMoneda}"
 }
 ```
 
@@ -229,4 +232,300 @@ HTTP/1.1 500 Server Error
 
 # <a name='cotizacion'></a> Cotización
 
-# <a name='abm-monedas'></a> ABM Monedas
+## <a name='#obtener-cotizacion'></a> Obtener cotización
+
+[Back to top](#top)
+
+<p>Obtiene la cotización actual de una moneda con respecto a otra</p>
+
+  GET /v1/exchange/:monedaOrigen/:monedaDestino
+
+
+
+### Examples
+
+Body
+
+```
+{
+    "monedaOrigen": "{monedaOrigen}",
+    "monedaDestino": "{monedaDestino}"
+}
+```
+Header Autorización
+
+```
+Authorization=bearer {token}
+```
+
+### Success Response
+
+Respuesta
+
+```
+{
+    "idMoneda": "{idMoneda}",
+    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
+    "montoConvertido": "{montoConvertido}",
+    "abreviaturaMoneda": "{abreviaturaMoneda}",
+    "simboloMoneda": "{simboloMoneda}"
+}
+```
+
+
+### Error Response
+
+401 Unauthorized
+
+```
+HTTP/1.1 401 Unauthorized
+```
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
+{
+    "path" : "{Nombre de la propiedad}",
+    "message" : "{Motivo del error}"
+}
+```
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
+{
+    "error" : "{Motivo del error}"
+}
+```
+500 Server Error
+
+```
+HTTP/1.1 500 Server Error
+{
+    "error" : "{Motivo del error}"
+}
+```
+
+# <a name='#abm-monedas'></a> ABM Monedas
+
+## <a name='#alta-moneda'></a> Alta Moneda
+
+[Back to top](#top)
+
+<p>Da de alta una nueva moneda. Se requiere rol de administrador.</p>
+
+  POST /v1/exchange/
+
+
+
+### Examples
+
+Body
+
+```
+{
+    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
+    "abreviaturaMoneda": "{abreviaturaMoneda}",
+    "simboloMoneda": "{simboloMoneda}",
+    "descripcionMoneda": "{descripcionMoneda}",
+    "accion":"alta"
+}
+```
+Header Autorización
+
+```
+Authorization=bearer {token}
+```
+
+### Success Response
+
+Respuesta
+
+```
+{
+    "idMoneda": "{idMoneda}",
+    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
+    "abreviaturaMoneda": "{abreviaturaMoneda}",
+    "simboloMoneda": "{simboloMoneda}",
+    "descripcionMoneda": "{descripcionMoneda}"
+}
+```
+
+
+### Error Response
+
+401 Unauthorized
+
+```
+HTTP/1.1 401 Unauthorized
+```
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
+{
+    "path" : "{Nombre de la propiedad}",
+    "message" : "{Motivo del error}"
+}
+```
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
+{
+    "error" : "{Motivo del error}"
+}
+```
+500 Server Error
+
+```
+HTTP/1.1 500 Server Error
+{
+    "error" : "{Motivo del error}"
+}
+```
+
+## <a name='#baja-moneda'></a> Baja Moneda
+
+[Back to top](#top)
+
+<p>Da de baja una moneda. Se requiere rol de administrador.</p>
+
+  POST /v1/exchange/
+
+
+
+### Examples
+
+Body
+
+```
+{
+    "idMoneda": "{idMoneda}",
+    "accion": "baja"
+}
+```
+Header Autorización
+
+```
+Authorization=bearer {token}
+```
+
+### Success Response
+
+200 Respuesta
+
+```
+HTTP/1.1 200 OK
+```
+
+
+### Error Response
+
+401 Unauthorized
+
+```
+HTTP/1.1 401 Unauthorized
+```
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
+{
+    "path" : "{Nombre de la propiedad}",
+    "message" : "{Motivo del error}"
+}
+```
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
+{
+    "error" : "{Motivo del error}"
+}
+```
+500 Server Error
+
+```
+HTTP/1.1 500 Server Error
+{
+    "error" : "{Motivo del error}"
+}
+```
+
+## <a name='#modificar-moneda'></a> Modificar Moneda
+
+[Back to top](#top)
+
+<p>Realiza una modificación a una moneda. Se requiere rol de administrador.</p>
+
+  POST /v1/exchange/
+
+
+
+### Examples
+
+Body
+
+```
+{
+    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
+    "abreviaturaMoneda": "{abreviaturaMoneda}",
+    "simboloMoneda": "{simboloMoneda}",
+    "descripcionMoneda": "{descripcionMoneda}",
+    "accion":"modificar"
+}
+```
+Header Autorización
+
+```
+Authorization=bearer {token}
+```
+
+### Success Response
+
+Respuesta
+
+```
+{
+    "idMoneda": "{idMoneda}",
+    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
+    "abreviaturaMoneda": "{abreviaturaMoneda}",
+    "simboloMoneda": "{simboloMoneda}",
+    "descripcionMoneda": "{descripcionMoneda}"
+}
+```
+
+
+### Error Response
+
+401 Unauthorized
+
+```
+HTTP/1.1 401 Unauthorized
+```
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
+{
+    "path" : "{Nombre de la propiedad}",
+    "message" : "{Motivo del error}"
+}
+```
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
+{
+    "error" : "{Motivo del error}"
+}
+```
+500 Server Error
+
+```
+HTTP/1.1 500 Server Error
+{
+    "error" : "{Motivo del error}"
+}
+```
