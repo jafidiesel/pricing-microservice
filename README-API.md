@@ -24,7 +24,7 @@ Microservicio de Cambio de Moneda
 <p>Convierte un monto enviado de una moneda especificada a otra moneda especificada</p>
 
 ```
-	GET /v1/exchange/:monto/:monedaOrigen/:monedaDestino
+	GET /v1/currency/:monedaOrigen/:monedaDestino
 ```
 
 
@@ -34,9 +34,7 @@ Body
 
 ```
 {
-    "monto": "{monto}",
-    "monedaOrigen": "{monedaOrigen}",
-    "monedaDestino": "{monedaDestino}"
+    "monto": "{monto}"
 }
 ```
 Header Autorización
@@ -100,7 +98,7 @@ HTTP/1.1 500 Server Error
 <p>Convierte el monto de un artículo especificado a una moneda determinada</p>
 
 ```
-	GET /v1/articles/:articleId/:monedaDestino
+	GET /v1/currency/:articleId/:monedaDestino
 ```
 
 
@@ -175,7 +173,7 @@ HTTP/1.1 500 Server Error
 <p>Obtiene el monto total del carrito y lo convierte a la moneda especificada.</p>
 
 ```
-	GET /v1/cart/:cartId/:monedaDestino
+	GET /v1/currency/:orderId/:monedaDestino
 ```
 
 
@@ -245,20 +243,13 @@ HTTP/1.1 500 Server Error
 <p>Obtiene la cotización actual de una moneda con respecto a otra</p>
 
 ```
-  GET /v1/exchange/:monedaOrigen/:monedaDestino
+  GET /v1/currency/:monedaOrigen/:monedaDestino
 ```
 
 
 ### Examples
 
-Body
 
-```
-{
-    "monedaOrigen": "{monedaOrigen}",
-    "monedaDestino": "{monedaDestino}"
-}
-```
 Header Autorización
 
 ```
@@ -323,7 +314,7 @@ HTTP/1.1 500 Server Error
 <p>Da de alta una nueva moneda. Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/exchange/
+  POST /v1/currency/
 ```
 
 
@@ -403,7 +394,7 @@ HTTP/1.1 500 Server Error
 <p>Da de baja una moneda. Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/exchange/
+  POST /v1/currency/
 ```
 
 
@@ -472,7 +463,7 @@ HTTP/1.1 500 Server Error
 <p>Realiza una modificación a una moneda. Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/exchange/
+  POST /v1/currency/
 ```
 
 
