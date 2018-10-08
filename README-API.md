@@ -66,15 +66,7 @@ HTTP/1.1 200 OK
 ```
 HTTP/1.1 401 Unauthorized
 ```
-400 Bad Request
 
-```
-HTTP/1.1 400 Bad Request
-{
-    "path" : "{Nombre de la propiedad}",
-    "message" : "{Motivo del error}"
-}
-```
 400 Bad Request
 
 ```
@@ -142,15 +134,7 @@ HTTP/1.1 200 OK
 ```
 HTTP/1.1 401 Unauthorized
 ```
-400 Bad Request
 
-```
-HTTP/1.1 400 Bad Request
-{
-    "path" : "{Nombre de la propiedad}",
-    "message" : "{Motivo del error}"
-}
-```
 400 Bad Request
 
 ```
@@ -170,7 +154,7 @@ HTTP/1.1 500 Server Error
 ## <a name='convertir-monto-carrito'></a> Convertir Monto Carrito
 [Back to top](#top)
 
-<p>Obtiene el monto total del carrito y lo convierte a la moneda especificada.</p>
+<p>Obtiene el monto total de una orden y lo convierte a la moneda especificada.</p>
 
 ```
 	GET /v1/currency/:orderId/:monedaDestino
@@ -207,15 +191,6 @@ HTTP/1.1 200 OK
 
 ```
 HTTP/1.1 401 Unauthorized
-```
-400 Bad Request
-
-```
-HTTP/1.1 400 Bad Request
-{
-    "path" : "{Nombre de la propiedad}",
-    "message" : "{Motivo del error}"
-}
 ```
 400 Bad Request
 
@@ -278,15 +253,6 @@ HTTP/1.1 200 OK
 
 ```
 HTTP/1.1 401 Unauthorized
-```
-400 Bad Request
-
-```
-HTTP/1.1 400 Bad Request
-{
-    "path" : "{Nombre de la propiedad}",
-    "message" : "{Motivo del error}"
-}
 ```
 400 Bad Request
 
@@ -366,15 +332,6 @@ HTTP/1.1 401 Unauthorized
 ```
 HTTP/1.1 400 Bad Request
 {
-    "path" : "{Nombre de la propiedad}",
-    "message" : "{Motivo del error}"
-}
-```
-400 Bad Request
-
-```
-HTTP/1.1 400 Bad Request
-{
     "error" : "{Motivo del error}"
 }
 ```
@@ -391,7 +348,7 @@ HTTP/1.1 500 Server Error
 
 [Back to top](#top)
 
-<p>Da de baja una moneda. Se requiere rol de administrador.</p>
+<p>Da de baja una moneda (baja lógica). Se requiere rol de administrador.</p>
 
 ```
   POST /v1/currency/
@@ -430,15 +387,7 @@ HTTP/1.1 200 OK
 ```
 HTTP/1.1 401 Unauthorized
 ```
-400 Bad Request
 
-```
-HTTP/1.1 400 Bad Request
-{
-    "path" : "{Nombre de la propiedad}",
-    "message" : "{Motivo del error}"
-}
-```
 400 Bad Request
 
 ```
@@ -508,15 +457,6 @@ HTTP/1.1 200 OK
 
 ```
 HTTP/1.1 401 Unauthorized
-```
-400 Bad Request
-
-```
-HTTP/1.1 400 Bad Request
-{
-    "path" : "{Nombre de la propiedad}",
-    "message" : "{Motivo del error}"
-}
 ```
 400 Bad Request
 
