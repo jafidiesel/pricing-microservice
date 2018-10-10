@@ -52,11 +52,11 @@ npm install -g apidoc-markdown2
 La documentación necesita ser generada manualmente ejecutando la siguiente linea en la carpeta raíz :
 
 ```bash
-apidoc -o www
-apidoc-markdown2 -p www -o README-API.md
+apidoc -o src
+apidoc-markdown2 -p src -o README-API.md
 ```
 
-Esto nos genera una carpeta www con la documentación, esta carpeta debe estar presente desde donde se ejecute el proyecto, aunque se puede configurar desde el archivo de properties.
+Esto nos genera una carpeta src con la documentación, esta carpeta debe estar presente desde donde se ejecute el proyecto, aunque se puede configurar desde el archivo de properties.
 
 
 ## webpack + babel7
