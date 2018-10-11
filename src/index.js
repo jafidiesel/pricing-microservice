@@ -14,7 +14,7 @@ console.log("Hello monkey!");
  *
  * @apiDescription Convierte un monto enviado de una moneda especificada a otra moneda especificada
  *
- * @apiParam {Number} Monto a convertir
+ * @apiParam {Number} monto Monto a convertir
  * 
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 Ok
@@ -26,8 +26,42 @@ console.log("Hello monkey!");
  *          "simboloMoneda": "{simboloMoneda}"
  *      }
  *
+ *  @apiUse ParamValidationErrors
+ *  @apiUse OtherErrors
+ * 
  */
+
+ 
 export function convert(monto) {
     
     return {};
 }
+
+
+
+/**
+ * @apiDefine ParamValidationErrors
+ *
+ * @apiErrorExample 400 Bad Request
+ *     HTTP/1.1 400 Bad Request
+ *     {
+ *        "messages" : [
+ *          {
+ *            "path" : "{Nombre de la propiedad}",
+ *            "message" : "{Motivo del error}"
+ *          },
+ *          ...
+ *       ]
+ *     }
+ */
+
+/**
+ * @apiDefine OtherErrors
+ *
+ * @apiErrorExample 500 Server Error
+ *     HTTP/1.1 500 Internal Server Error
+ *     {
+ *        "error" : "Not Found"
+ *     }
+ *
+ */

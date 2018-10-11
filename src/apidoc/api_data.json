@@ -18,8 +18,8 @@
             "group": "Parameter",
             "type": "Number",
             "optional": false,
-            "field": "Monto",
-            "description": "<p>a convertir</p>"
+            "field": "monto",
+            "description": "<p>Monto a convertir</p>"
           }
         ]
       }
@@ -35,7 +35,21 @@
     },
     "version": "0.0.0",
     "filename": "./src/index.js",
-    "groupTitle": "Convert"
+    "groupTitle": "Convert",
+    "error": {
+      "examples": [
+        {
+          "title": "400 Bad Request",
+          "content": "HTTP/1.1 400 Bad Request\n{\n   \"messages\" : [\n     {\n       \"path\" : \"{Nombre de la propiedad}\",\n       \"message\" : \"{Motivo del error}\"\n     },\n     ...\n  ]\n}",
+          "type": "json"
+        },
+        {
+          "title": "500 Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   \"error\" : \"Not Found\"\n}",
+          "type": "json"
+        }
+      ]
+    }
   },
   {
     "type": "",
@@ -3950,9 +3964,9 @@
     "type": "",
     "url": "",
     "version": "0.0.0",
-    "filename": "./src/main.js",
-    "group": "_home_jafi_Documentos_git_CurrencyExchange_Microservice_src_main_js",
-    "groupTitle": "_home_jafi_Documentos_git_CurrencyExchange_Microservice_src_main_js",
+    "filename": "./src/apidoc/main.js",
+    "group": "_home_jafi_Documentos_git_CurrencyExchange_Microservice_src_apidoc_main_js",
+    "groupTitle": "_home_jafi_Documentos_git_CurrencyExchange_Microservice_src_apidoc_main_js",
     "name": ""
   }
 ]

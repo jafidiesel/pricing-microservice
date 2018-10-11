@@ -25,7 +25,7 @@ Currency exchange microservice
 
 | Name     | Type       | Description                           |
 |:---------|:-----------|:--------------------------------------|
-|  Monto | Number | <p>a convertir</p>|
+|  monto | Number | <p>Monto a convertir</p>|
 
 
 ### Success Response
@@ -44,3 +44,27 @@ HTTP/1.1 200 Ok
 ```
 
 
+### Error Response
+
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
+{
+   "messages" : [
+     {
+       "path" : "{Nombre de la propiedad}",
+       "message" : "{Motivo del error}"
+     },
+     ...
+  ]
+}
+```
+500 Server Error
+
+```
+HTTP/1.1 500 Internal Server Error
+{
+   "error" : "Not Found"
+}
+```
