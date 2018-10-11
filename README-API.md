@@ -24,7 +24,7 @@ Microservicio de Cambio de Moneda
 <p>Convierte un monto enviado de una moneda especificada a otra moneda especificada</p>
 
 ```
-	GET /v1/exchanger/:monedaOrigen/:monedaDestino
+	GET /v1/exchanger/
 ```
 
 
@@ -34,7 +34,9 @@ Body
 
 ```
 {
-    "monto": "{monto}"
+    "monto": <valor>,
+    "monedaOrigen": <valor>,
+    "monedaDestino": <valor>
 }
 ```
 Header Autorización
@@ -50,11 +52,11 @@ Respuesta
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",  
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "montoConvertido": "{montoConvertido}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}"
+    "idMoneda": <valor>,
+    "codigoNumericoMoneda": <valor>,
+    "montoConvertido": <valor>,
+    "abreviaturaMoneda": <valor>,
+    "simboloMoneda": <valor>
 }
 ```
 
@@ -90,7 +92,7 @@ HTTP/1.1 500 Server Error
 <p>Convierte el monto de un artículo especificado a una moneda determinada</p>
 
 ```
-	GET /v1/exchanger/:articleId/:monedaDestino
+	GET /v1/exchanger/articles/:articleId/
 ```
 
 
@@ -100,8 +102,7 @@ Body
 
 ```
 {
-    "id": "{articleId}",
-    "monedaDestino": "{monedaDestino}"
+    "monedas": [<valor>...]
 }
 ```
 
@@ -118,11 +119,18 @@ Respuesta
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "montoConvertido": "{montoConvertido}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}"
+    "articleId": <valor>,
+    "conversions": {
+        {
+            "idMoneda": <valor>,
+            "codigoNumericoMoneda": <valor>,
+            "montoConvertido": <valor>,
+            "abreviaturaMoneda": <valor>,
+            "simboloMoneda": <valor>
+        },
+        {...}
+    }
+    
 }
 ```
 
@@ -157,11 +165,19 @@ HTTP/1.1 500 Server Error
 <p>Obtiene el monto total de una orden y lo convierte a la moneda especificada.</p>
 
 ```
-	GET /v1/exchanger/:orderId/:monedaDestino
+	GET /v1/exchanger/orders/:orderId
 ```
 
 
 ### Examples
+
+Body
+
+```
+{
+    "monedas": [<valor>...]
+}
+```
 
 Header Autorización
 
@@ -176,11 +192,21 @@ Respuesta
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "montoConvertido": "{montoConvertido}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}"
+    {
+        "orderId": <valor>,
+        "conversions": {
+            {
+                "idMoneda": <valor>,
+                "codigoNumericoMoneda": <valor>,
+                "montoConvertido": <valor>,
+                "abreviaturaMoneda": <valor>,
+                "simboloMoneda": <valor>
+            },
+            {...}
+        }
+    },
+    {...}
+    
 }
 ```
 
@@ -209,7 +235,7 @@ HTTP/1.1 500 Server Error
 }
 ```
 
-# <a name='cotizacion'></a> Cotización
+# <a name='#cotizacion'></a> Cotización
 
 ## <a name='#obtener-cotizacion'></a> Obtener cotización
 
@@ -218,12 +244,20 @@ HTTP/1.1 500 Server Error
 <p>Obtiene la cotización actual de una moneda con respecto a otra</p>
 
 ```
-  GET /v1/exchanger/:monedaOrigen/:monedaDestino
+  GET /v1/exchanger/currency/price
 ```
 
 
 ### Examples
 
+Body
+
+```
+{
+    "monedasOrigen": <valor>,
+    "monedasOrigen": <valor>
+}
+```
 
 Header Autorización
 
@@ -238,11 +272,20 @@ Respuesta
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "montoConvertido": "{montoConvertido}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}"
+    {
+        "idMoneda": <value>,
+        "codigoNumericoMoneda": <value>,
+        "monto": <value>,
+        "abreviaturaMoneda": <value>,
+        "simboloMoneda": <value>
+    },
+    {
+        "idMoneda": <value>,
+        "codigoNumericoMoneda": <value>,
+        "monto": <value>,
+        "abreviaturaMoneda": <value>,
+        "simboloMoneda": <value>
+    }
 }
 ```
 
@@ -280,10 +323,8 @@ HTTP/1.1 500 Server Error
 <p>Da de alta una nueva moneda. Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/exchanger/
+  POST /v1/exchanger/currency/
 ```
-
-
 
 ### Examples
 
@@ -291,11 +332,11 @@ Body
 
 ```
 {
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}",
-    "descripcionMoneda": "{descripcionMoneda}",
-    "accion":"alta"
+    "codigoNumericoMoneda": <valor>,
+    "abreviaturaMoneda": <valor>,
+    "simboloMoneda": <valor>,
+    "descripcionMoneda": <valor>,
+    "accion":"ALTA"
 }
 ```
 Header Autorización
@@ -311,11 +352,11 @@ Respuesta
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}",
-    "descripcionMoneda": "{descripcionMoneda}"
+    "idMoneda": <valor>,
+    "codigoNumericoMoneda": <valor>,
+    "abreviaturaMoneda": <valor>,
+    "simboloMoneda": <valor>,
+    "descripcionMoneda": <valor>
 }
 ```
 
@@ -351,7 +392,7 @@ HTTP/1.1 500 Server Error
 <p>Da de baja una moneda (baja lógica). Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/exchanger/
+  POST /v1/exchanger/currency/
 ```
 
 
@@ -361,8 +402,8 @@ Body
 
 ```
 {
-    "idMoneda": "{idMoneda}",
-    "accion": "baja"
+    "idMoneda": <valor>,
+    "accion": "BAJA"
 }
 ```
 Header Autorización
@@ -412,7 +453,7 @@ HTTP/1.1 500 Server Error
 <p>Realiza una modificación a una moneda. Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/exchanger/
+  POST /v1/exchanger/currency/
 ```
 
 
@@ -422,11 +463,11 @@ Body
 
 ```
 {
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}",
-    "descripcionMoneda": "{descripcionMoneda}",
-    "accion":"modificar"
+    "codigoNumericoMoneda": <valor>,
+    "abreviaturaMoneda": <valor>,
+    "simboloMoneda": <valor>,
+    "descripcionMoneda": <valor>,
+    "accion":"MODIFICAR"
 }
 ```
 Header Autorización
@@ -442,11 +483,11 @@ Respuesta
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}",
-    "descripcionMoneda": "{descripcionMoneda}"
+    "idMoneda": <valor>,
+    "codigoNumericoMoneda": <valor>,
+    "abreviaturaMoneda": <valor>,
+    "simboloMoneda": <valor>,
+    "descripcionMoneda": <valor>
 }
 ```
 
