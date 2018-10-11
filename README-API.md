@@ -255,7 +255,7 @@ Body
 ```
 {
     "monedasOrigen": <valor>,
-    "monedasOrigen": <valor>
+    "monedasDestino": <valor>
 }
 ```
 
@@ -272,14 +272,14 @@ Respuesta
 ```
 HTTP/1.1 200 OK
 {
-    {
+    "moneaOrigen" {
         "idMoneda": <value>,
         "codigoNumericoMoneda": <value>,
         "monto": <value>,
         "abreviaturaMoneda": <value>,
         "simboloMoneda": <value>
     },
-    {
+    monedaDestino {
         "idMoneda": <value>,
         "codigoNumericoMoneda": <value>,
         "monto": <value>,
