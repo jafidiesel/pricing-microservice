@@ -24,7 +24,7 @@ Microservicio de Cambio de Moneda
 <p>Convierte un monto enviado de una moneda especificada a otra moneda especificada</p>
 
 ```
-	GET /v1/currency/:monedaOrigen/:monedaDestino
+	GET /v1/exchanger/:monedaOrigen/:monedaDestino
 ```
 
 
@@ -90,7 +90,7 @@ HTTP/1.1 500 Server Error
 <p>Convierte el monto de un artículo especificado a una moneda determinada</p>
 
 ```
-	GET /v1/currency/:articleId/:monedaDestino
+	GET /v1/exchanger/:articleId/:monedaDestino
 ```
 
 
@@ -157,7 +157,7 @@ HTTP/1.1 500 Server Error
 <p>Obtiene el monto total de una orden y lo convierte a la moneda especificada.</p>
 
 ```
-	GET /v1/currency/:orderId/:monedaDestino
+	GET /v1/exchanger/:orderId/:monedaDestino
 ```
 
 
@@ -218,7 +218,7 @@ HTTP/1.1 500 Server Error
 <p>Obtiene la cotización actual de una moneda con respecto a otra</p>
 
 ```
-  GET /v1/currency/:monedaOrigen/:monedaDestino
+  GET /v1/exchanger/:monedaOrigen/:monedaDestino
 ```
 
 
@@ -280,7 +280,7 @@ HTTP/1.1 500 Server Error
 <p>Da de alta una nueva moneda. Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/currency/
+  POST /v1/exchanger/
 ```
 
 
@@ -351,7 +351,7 @@ HTTP/1.1 500 Server Error
 <p>Da de baja una moneda (baja lógica). Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/currency/
+  POST /v1/exchanger/
 ```
 
 
@@ -412,7 +412,7 @@ HTTP/1.1 500 Server Error
 <p>Realiza una modificación a una moneda. Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/currency/
+  POST /v1/exchanger/
 ```
 
 
