@@ -1,25 +1,39 @@
 [
   {
     "type": "get",
-    "url": "/v1/currency/:monedaOrigen/:monedaDestino",
-    "title": "Convertir Monto",
-    "name": "convertAmmount",
-    "group": "Convert",
+    "url": "/v1/exchanger/",
+    "title": "Amount Conversion",
+    "name": "convertAmount",
+    "group": "Currency_Exchange",
     "permission": [
       {
         "name": "user"
       }
     ],
-    "description": "<p>Convierte un monto enviado de una moneda especificada a otra moneda especificada</p>",
+    "description": "<p>Convert an amount from a currency to another.</p>",
     "parameter": {
       "fields": {
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "Number",
+            "type": "Numeric",
             "optional": false,
-            "field": "monto",
-            "description": "<p>Monto a convertir</p>"
+            "field": "amount",
+            "description": "<p>Amount to convert</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "originCurrency",
+            "description": "<p>The origin currency of the amount</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "destinationCurrency",
+            "description": "<p>The destination currency of the amount</p>"
           }
         ]
       }
@@ -28,14 +42,177 @@
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 Ok\n{\n    \"idMoneda\": \"{idMoneda}\",  \n    \"codigoNumericoMoneda\": \"{codigoNumericoMoneda}\",\n    \"montoConvertido\": \"{montoConvertido}\",\n    \"abreviaturaMoneda\": \"{abreviaturaMoneda}\",\n    \"simboloMoneda\": \"{simboloMoneda}\"\n}",
+          "content": "HTTP/1.1 200 Ok\n{\n \"currencyNumericCode\": <value>,\n \"amountConverted\": <value>,\n \"currencyAbbreviation\": <value>,\n \"currencySymbol\": <value>\n}",
           "type": "json"
         }
       ]
     },
     "version": "0.0.0",
-    "filename": "./src/index.js",
-    "groupTitle": "Convert",
+    "filename": "./src/exchanger.js",
+    "groupTitle": "Currency_Exchange",
+    "error": {
+      "examples": [
+        {
+          "title": "400 Bad Request",
+          "content": "HTTP/1.1 400 Bad Request\n{\n   \"messages\" : [\n     {\n       \"path\" : \"{Nombre de la propiedad}\",\n       \"message\" : \"{Motivo del error}\"\n     },\n     ...\n  ]\n}",
+          "type": "json"
+        },
+        {
+          "title": "500 Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   \"error\" : \"Not Found\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "get",
+    "url": "/v1/exchanger/articles/:articleId/",
+    "title": "Convert Article Price",
+    "name": "convertArticle",
+    "group": "Currency_Exchange",
+    "permission": [
+      {
+        "name": "user"
+      }
+    ],
+    "description": "<p>Gets the article's price and converts it to the specified currency.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "currency[]",
+            "description": "<p>Currency list separated with ,</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 Ok\n{\n    \"articleId\": <value>,\n    \"conversions\": {\n        {\n            \"idCurrency\": <value>,\n            \"currencyNumericCode\": <value>,\n            \"amountConverted\": <value>,\n            \"currencyAbbreviation\": <value>,\n            \"currencySymbol\": <value>\n        },\n        {...}\n      }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./src/exchanger.js",
+    "groupTitle": "Currency_Exchange",
+    "error": {
+      "examples": [
+        {
+          "title": "400 Bad Request",
+          "content": "HTTP/1.1 400 Bad Request\n{\n   \"messages\" : [\n     {\n       \"path\" : \"{Nombre de la propiedad}\",\n       \"message\" : \"{Motivo del error}\"\n     },\n     ...\n  ]\n}",
+          "type": "json"
+        },
+        {
+          "title": "500 Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   \"error\" : \"Not Found\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "get",
+    "url": "/v1/exchanger/orders/:orderId",
+    "title": "Convert Order Price Amount",
+    "name": "convertOrder",
+    "group": "Currency_Exchange",
+    "permission": [
+      {
+        "name": "user"
+      }
+    ],
+    "description": "<p>Gets the total amount of an order and converts it to the specified currency.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "currency[]",
+            "description": "<p>Currency list separated with ,</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 Ok\n{\n    \"orderId\": <value>,\n    \"conversions\": {\n        {\n            \"currencyNumericCode\": <value>,\n            \"amountConverted\": <value>,\n            \"currencyAbbreviation\": <value>,\n            \"currencySymbol\": <value>\n        },\n        {...}\n    }\n }",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./src/exchanger.js",
+    "groupTitle": "Currency_Exchange",
+    "error": {
+      "examples": [
+        {
+          "title": "400 Bad Request",
+          "content": "HTTP/1.1 400 Bad Request\n{\n   \"messages\" : [\n     {\n       \"path\" : \"{Nombre de la propiedad}\",\n       \"message\" : \"{Motivo del error}\"\n     },\n     ...\n  ]\n}",
+          "type": "json"
+        },
+        {
+          "title": "500 Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   \"error\" : \"Not Found\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "get",
+    "url": "/v1/exchanger/currency/price",
+    "title": "Get Quote",
+    "name": "getQuote",
+    "group": "Quotation",
+    "permission": [
+      {
+        "name": "user"
+      }
+    ],
+    "description": "<p>Gets the direct conversion of a currency</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "originCurrency",
+            "description": "<p>The origin currency</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "destinationCurrency",
+            "description": "<p>The destination currency</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 Ok\n{\n   \"originCurrency\" {\n       \"currencyNumericCode\": <value>,\n       \"monto\": <value>,\n       \"currencyAbbreviation\": <value>,\n       \"currencySymbol\": <value>\n   },\n   \"destinationCurrency\" {\n       \"currencyNumericCode\": <value>,\n       \"monto\": <value>,\n       \"currencyAbbreviation\": <value>,\n       \"currencySymbol\": <value>\n   }\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./src/exchanger.js",
+    "groupTitle": "Quotation",
     "error": {
       "examples": [
         {
