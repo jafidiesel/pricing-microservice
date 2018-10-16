@@ -1,12 +1,13 @@
 <a name="top"></a>
-# Currency Exchange
+# Currency Exchange Microservice
+
 
 Microservicio de Cambio de Moneda
 
-- [Cambio de Moneda](#cambioDeMoneda)
-  - [Convertir Monto](#convertir-monto)
-  - [Convertir Monto Artículo](#convertir-monto-articulo)
-  - [Convertir Monto Carrito](#convertir-monto-carrito)
+- [Currency Exchange](#currencyExchange)
+  - [Amount Conversion](#amount-conversion)
+  - [Convert Article's Price](#convert-article-price)
+  - [Convert Cart's Price Amount](#convert-cart-price-amount)
 
 - [Cotización](#cotizacion)
   - [Obtener Cotización](#obtener-cotizacion)
@@ -16,15 +17,15 @@ Microservicio de Cambio de Moneda
   - [Baja Moneda](#baja-moneda)
   - [Modificación Moneda](#modificacion-moneda)
 
-# <a name='cambioDeMoneda'></a> Cambio de moneda
+# <a name='currencyExchange'></a> Currency Exchange
 
-## <a name='convertir-monto'></a> Convertir monto
+## <a name='#amount-conversion'></a> Amount Conversion
 [Back to top](#top)
 
-<p>Convierte un monto enviado de una moneda especificada a otra moneda especificada</p>
+<p>Convert an amount from a currency to another.</p>
 
 ```
-	GET /v1/currency/:monedaOrigen/:monedaDestino
+	GET /v1/exchanger/
 ```
 
 
@@ -34,7 +35,9 @@ Body
 
 ```
 {
-    "monto": "{monto}"
+    "amount": <value>,
+    "originCurrency": <value>,
+    "destinationCurrency": <value>
 }
 ```
 Header Autorización
@@ -45,16 +48,16 @@ Authorization=bearer {token}
 
 ### Success Response
 
-Respuesta
+Response
 
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",  
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "montoConvertido": "{montoConvertido}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}"
+    "idCurrency": <value>,
+    "currencyNumericCode": <value>,
+    "amountConverted": <value>,
+    "currencyAbbreviation": <value>,
+    "currencySymbol": <value>
 }
 ```
 
@@ -72,7 +75,7 @@ HTTP/1.1 401 Unauthorized
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 500 Server Error
@@ -80,28 +83,30 @@ HTTP/1.1 400 Bad Request
 ```
 HTTP/1.1 500 Server Error
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 
-## <a name='convertir-monto-articulo'></a> Convertir Monto Artículo
+## <a name='convert-article-price'></a> Convert Article's Price
 [Back to top](#top)
 
-<p>Convierte el monto de un artículo especificado a una moneda determinada</p>
+<p>Convert an article's price to a currency.</p>
 
 ```
-	GET /v1/currency/:articleId/:monedaDestino
+	GET /v1/exchanger/articles/:articleId/
 ```
 
 
 ### Examples
 
+Parametros:
+Ciurrent: Lista de moneda separadas por ,, Ejemploe:
+
 Body
 
 ```
 {
-    "id": "{articleId}",
-    "monedaDestino": "{monedaDestino}"
+    "currency": [<value>...]
 }
 ```
 
@@ -113,16 +118,23 @@ Authorization=bearer {token}
 
 ### Success Response
 
-Respuesta
+Response
 
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "montoConvertido": "{montoConvertido}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}"
+    "articleId": <value>,
+    "conversions": {
+        {
+            "idCurrency": <value>,
+            "currencyNumericCode": <value>,
+            "amountConverted": <value>,
+            "currencyAbbreviation": <value>,
+            "currencySymbol": <value>
+        },
+        {...}
+    }
+    
 }
 ```
 
@@ -140,7 +152,7 @@ HTTP/1.1 401 Unauthorized
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 500 Server Error
@@ -148,20 +160,28 @@ HTTP/1.1 400 Bad Request
 ```
 HTTP/1.1 500 Server Error
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
-## <a name='convertir-monto-carrito'></a> Convertir Monto Carrito
+## <a name='$convert-cart-price-amount'></a> Convert Cart's Price Amount
 [Back to top](#top)
 
 <p>Obtiene el monto total de una orden y lo convierte a la moneda especificada.</p>
 
 ```
-	GET /v1/currency/:orderId/:monedaDestino
+	GET /v1/exchanger/orders/:orderId
 ```
 
 
 ### Examples
+
+Body
+
+```
+{
+    "currency": [<value>...]
+}
+```
 
 Header Autorización
 
@@ -171,16 +191,26 @@ Authorization=bearer {token}
 
 ### Success Response
 
-Respuesta
+Response
 
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "montoConvertido": "{montoConvertido}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}"
+    {
+        "orderId": <value>,
+        "conversions": {
+            {
+                "idCurrency": <value>,
+                "currencyNumericCode": <value>,
+                "amountConverted": <value>,
+                "currencyAbbreviation": <value>,
+                "currencySymbol": <value>
+            },
+            {...}
+        }
+    },
+    {...}
+    
 }
 ```
 
@@ -197,7 +227,7 @@ HTTP/1.1 401 Unauthorized
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 500 Server Error
@@ -205,11 +235,11 @@ HTTP/1.1 400 Bad Request
 ```
 HTTP/1.1 500 Server Error
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 
-# <a name='cotizacion'></a> Cotización
+# <a name='#cotizacion'></a> Cotización
 
 ## <a name='#obtener-cotizacion'></a> Obtener cotización
 
@@ -218,12 +248,20 @@ HTTP/1.1 500 Server Error
 <p>Obtiene la cotización actual de una moneda con respecto a otra</p>
 
 ```
-  GET /v1/currency/:monedaOrigen/:monedaDestino
+  GET /v1/exchanger/currency/price
 ```
 
 
 ### Examples
 
+Body
+
+```
+{
+    "monedasOrigen": <value>,
+    "monedasDestino": <value>
+}
+```
 
 Header Autorización
 
@@ -233,16 +271,25 @@ Authorization=bearer {token}
 
 ### Success Response
 
-Respuesta
+Response
 
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "montoConvertido": "{montoConvertido}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}"
+    "originCurrency" {
+        "idCurrency": <value>,
+        "currencyNumericCode": <value>,
+        "monto": <value>,
+        "currencyAbbreviation": <value>,
+        "currencySymbol": <value>
+    },
+    "destinationCurrency" {
+        "idCurrency": <value>,
+        "currencyNumericCode": <value>,
+        "monto": <value>,
+        "currencyAbbreviation": <value>,
+        "currencySymbol": <value>
+    }
 }
 ```
 
@@ -259,7 +306,7 @@ HTTP/1.1 401 Unauthorized
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 500 Server Error
@@ -267,7 +314,7 @@ HTTP/1.1 400 Bad Request
 ```
 HTTP/1.1 500 Server Error
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 
@@ -280,10 +327,8 @@ HTTP/1.1 500 Server Error
 <p>Da de alta una nueva moneda. Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/currency/
+  POST /v1/exchanger/currency/
 ```
-
-
 
 ### Examples
 
@@ -291,11 +336,11 @@ Body
 
 ```
 {
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}",
-    "descripcionMoneda": "{descripcionMoneda}",
-    "accion":"alta"
+    "currencyNumericCode": <value>,
+    "currencyAbbreviation": <value>,
+    "currencySymbol": <value>,
+    "descripcionMoneda": <value>,
+    "accion":"ALTA"
 }
 ```
 Header Autorización
@@ -306,16 +351,16 @@ Authorization=bearer {token}
 
 ### Success Response
 
-Respuesta
+Response
 
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}",
-    "descripcionMoneda": "{descripcionMoneda}"
+    "idCurrency": <value>,
+    "currencyNumericCode": <value>,
+    "currencyAbbreviation": <value>,
+    "currencySymbol": <value>,
+    "descripcionMoneda": <value>
 }
 ```
 
@@ -332,7 +377,7 @@ HTTP/1.1 401 Unauthorized
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 500 Server Error
@@ -340,7 +385,7 @@ HTTP/1.1 400 Bad Request
 ```
 HTTP/1.1 500 Server Error
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 
@@ -351,7 +396,7 @@ HTTP/1.1 500 Server Error
 <p>Da de baja una moneda (baja lógica). Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/currency/
+  DELETE /v1/exchanger/:currencyId/
 ```
 
 
@@ -361,8 +406,8 @@ Body
 
 ```
 {
-    "idMoneda": "{idMoneda}",
-    "accion": "baja"
+    "idCurrency": <value>,
+    "accion": "BAJA"
 }
 ```
 Header Autorización
@@ -373,7 +418,7 @@ Authorization=bearer {token}
 
 ### Success Response
 
-200 Respuesta
+200 Response
 
 ```
 HTTP/1.1 200 OK
@@ -393,7 +438,7 @@ HTTP/1.1 401 Unauthorized
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 500 Server Error
@@ -401,7 +446,7 @@ HTTP/1.1 400 Bad Request
 ```
 HTTP/1.1 500 Server Error
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 
@@ -412,7 +457,7 @@ HTTP/1.1 500 Server Error
 <p>Realiza una modificación a una moneda. Se requiere rol de administrador.</p>
 
 ```
-  POST /v1/currency/
+  POST /v1/exchanger/:currencyId/
 ```
 
 
@@ -422,11 +467,10 @@ Body
 
 ```
 {
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}",
-    "descripcionMoneda": "{descripcionMoneda}",
-    "accion":"modificar"
+    "currencyNumericCode": <value>,
+    "currencyAbbreviation": <value>,
+    "currencySymbol": <value>,
+    "descripcionMoneda": <value>,
 }
 ```
 Header Autorización
@@ -437,16 +481,16 @@ Authorization=bearer {token}
 
 ### Success Response
 
-Respuesta
+Response
 
 ```
 HTTP/1.1 200 OK
 {
-    "idMoneda": "{idMoneda}",
-    "codigoNumericoMoneda": "{codigoNumericoMoneda}",
-    "abreviaturaMoneda": "{abreviaturaMoneda}",
-    "simboloMoneda": "{simboloMoneda}",
-    "descripcionMoneda": "{descripcionMoneda}"
+    "idCurrency": <value>,
+    "currencyNumericCode": <value>,
+    "currencyAbbreviation": <value>,
+    "currencySymbol": <value>,
+    "descripcionMoneda": <value>
 }
 ```
 
@@ -463,7 +507,7 @@ HTTP/1.1 401 Unauthorized
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
 500 Server Error
@@ -471,6 +515,6 @@ HTTP/1.1 400 Bad Request
 ```
 HTTP/1.1 500 Server Error
 {
-    "error" : "{Motivo del error}"
+    "error" : "{error motive}"
 }
 ```
