@@ -1,5 +1,109 @@
 define({ "api": [
   {
+    "type": "post",
+    "url": "/v1/exchanger/currency/",
+    "title": "Delete Currency",
+    "name": "deleteCurrency",
+    "group": "CRUD_Currencies",
+    "permission": [
+      {
+        "name": "admin"
+      }
+    ],
+    "description": "<p>Delete a currency</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "currencyNumericCode",
+            "description": "<p>The origin currency</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 Ok",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./src/CRUDCurrencies.js",
+    "groupTitle": "CRUD_Currencies",
+    "error": {
+      "examples": [
+        {
+          "title": "400 Bad Request",
+          "content": "HTTP/1.1 400 Bad Request\n{\n   \"messages\" : [\n     {\n       \"path\" : \"{Nombre de la propiedad}\",\n       \"message\" : \"{Motivo del error}\"\n     },\n     ...\n  ]\n}",
+          "type": "json"
+        },
+        {
+          "title": "500 Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   \"error\" : \"Not Found\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
+    "type": "get",
+    "url": "/v1/exchanger/currency/",
+    "title": "Read Currency",
+    "name": "readCurrency",
+    "group": "CRUD_Currencies",
+    "permission": [
+      {
+        "name": "user"
+      }
+    ],
+    "description": "<p>Read a currency</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "currencyNumericCode",
+            "description": "<p>The numeric code of a currency</p>"
+          }
+        ]
+      }
+    },
+    "success": {
+      "examples": [
+        {
+          "title": "Success-Response:",
+          "content": "HTTP/1.1 200 Ok\n{\n    \"currencyNumericCode\": <value>,\n    \"currencyAbbreviation\": <value>,\n    \"currencySymbol\": <value>\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./src/CRUDCurrencies.js",
+    "groupTitle": "CRUD_Currencies",
+    "error": {
+      "examples": [
+        {
+          "title": "400 Bad Request",
+          "content": "HTTP/1.1 400 Bad Request\n{\n   \"messages\" : [\n     {\n       \"path\" : \"{Nombre de la propiedad}\",\n       \"message\" : \"{Motivo del error}\"\n     },\n     ...\n  ]\n}",
+          "type": "json"
+        },
+        {
+          "title": "500 Server Error",
+          "content": "HTTP/1.1 500 Internal Server Error\n{\n   \"error\" : \"Not Found\"\n}",
+          "type": "json"
+        }
+      ]
+    }
+  },
+  {
     "type": "get",
     "url": "/v1/exchanger/",
     "title": "Amount Conversion",
@@ -205,7 +309,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 Ok\n{\n   \"originCurrency\" {\n       \"currencyNumericCode\": <value>,\n       \"monto\": <value>,\n       \"currencyAbbreviation\": <value>,\n       \"currencySymbol\": <value>\n   },\n   \"destinationCurrency\" {\n       \"currencyNumericCode\": <value>,\n       \"monto\": <value>,\n       \"currencyAbbreviation\": <value>,\n       \"currencySymbol\": <value>\n   }\n}",
+          "content": "HTTP/1.1 200 Ok\n{\n   \"originCurrency\" {\n       \"currencyNumericCode\": <value>,\n       \"amount\": <value>,\n       \"currencyAbbreviation\": <value>,\n       \"currencySymbol\": <value>\n   },\n   \"destinationCurrency\" {\n       \"currencyNumericCode\": <value>,\n       \"amount\": <value>,\n       \"currencyAbbreviation\": <value>,\n       \"currencySymbol\": <value>\n   }\n}",
           "type": "json"
         }
       ]
@@ -4144,6 +4248,34 @@ define({ "api": [
     "filename": "./src/apidoc/main.js",
     "group": "_home_jafi_Documentos_git_CurrencyExchange_Microservice_src_apidoc_main_js",
     "groupTitle": "_home_jafi_Documentos_git_CurrencyExchange_Microservice_src_apidoc_main_js",
+    "name": ""
+  },
+  {
+    "success": {
+      "fields": {
+        "Success 200": [
+          {
+            "group": "Success 200",
+            "optional": false,
+            "field": "varname1",
+            "description": "<p>No type.</p>"
+          },
+          {
+            "group": "Success 200",
+            "type": "String",
+            "optional": false,
+            "field": "varname2",
+            "description": "<p>With type.</p>"
+          }
+        ]
+      }
+    },
+    "type": "",
+    "url": "",
+    "version": "0.0.0",
+    "filename": "./src/main.js",
+    "group": "_home_jafi_Documentos_git_CurrencyExchange_Microservice_src_main_js",
+    "groupTitle": "_home_jafi_Documentos_git_CurrencyExchange_Microservice_src_main_js",
     "name": ""
   }
 ] });

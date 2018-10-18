@@ -1,61 +1,101 @@
 <a name="top"></a>
-# Currency Exchange Microservice
+# currencyexchange-microservice v1.0.0
+
+Currency exchange microservice
+
+- [CRUD_Currencies](#crud_currencies)
+	- [Delete Currency](#delete-currency)
+	- [Read Currency](#read-currency)
+	
+- [Currency_Exchange](#currency_exchange)
+	- [Amount Conversion](#amount-conversion)
+	- [Convert Article Price](#convert-article-price)
+	- [Convert Order Price Amount](#convert-order-price-amount)
+	
+- [Quotation](#quotation)
+	- [Get Quote](#get-quote)
+	
 
 
-Microservicio de Cambio de Moneda
+# <a name='crud_currencies'></a> CRUD_Currencies
 
-- [Currency Exchange](#currencyExchange)
-  - [Amount Conversion](#amount-conversion)
-  - [Convert Article's Price](#convert-article-price)
-  - [Convert Cart's Price Amount](#convert-cart-price-amount)
-
-- [Cotización](#cotizacion)
-  - [Obtener Cotización](#obtener-cotizacion)
-
-- [ABM Monedas](#abm-monedas)
-  - [Alta Moneda](#alta-moneda)
-  - [Baja Moneda](#baja-moneda)
-  - [Modificación Moneda](#modificacion-moneda)
-
-# <a name='currencyExchange'></a> Currency Exchange
-
-## <a name='#amount-conversion'></a> Amount Conversion
+## <a name='delete-currency'></a> Delete Currency
 [Back to top](#top)
 
-<p>Convert an amount from a currency to another.</p>
+<p>Delete a currency</p>
 
-```
-	GET /v1/exchanger/
-```
+	POST /v1/exchanger/currency/
 
 
-### Examples
 
-Body
 
-```
-{
-    "amount": <value>,
-    "originCurrency": <value>,
-    "destinationCurrency": <value>
-}
-```
-Header Autorización
 
-```
-Authorization=bearer {token}
-```
+### Parameter Parameters
+
+| Name     | Type       | Description                           |
+|:---------|:-----------|:--------------------------------------|
+|  currencyNumericCode | String | <p>The origin currency</p>|
+
 
 ### Success Response
 
-Response
+Success-Response:
 
 ```
-HTTP/1.1 200 OK
+HTTP/1.1 200 Ok
+```
+
+
+### Error Response
+
+400 Bad Request
+
+```
+HTTP/1.1 400 Bad Request
 {
-    "idCurrency": <value>,
+   "messages" : [
+     {
+       "path" : "{Nombre de la propiedad}",
+       "message" : "{Motivo del error}"
+     },
+     ...
+  ]
+}
+```
+500 Server Error
+
+```
+HTTP/1.1 500 Internal Server Error
+{
+   "error" : "Not Found"
+}
+```
+## <a name='read-currency'></a> Read Currency
+[Back to top](#top)
+
+<p>Read a currency</p>
+
+	GET /v1/exchanger/currency/
+
+
+
+
+
+### Parameter Parameters
+
+| Name     | Type       | Description                           |
+|:---------|:-----------|:--------------------------------------|
+|  currencyNumericCode | String | <p>The numeric code of a currency</p>|
+
+
+### Success Response
+
+Success-Response:
+
+```
+HTTP/1.1 200 Ok
+{
     "currencyNumericCode": <value>,
-    "amountConverted": <value>,
     "currencyAbbreviation": <value>,
     "currencySymbol": <value>
 }
@@ -64,64 +104,113 @@ HTTP/1.1 200 OK
 
 ### Error Response
 
-401 Unauthorized
+400 Bad Request
 
 ```
-HTTP/1.1 401 Unauthorized
+HTTP/1.1 400 Bad Request
+{
+   "messages" : [
+     {
+       "path" : "{Nombre de la propiedad}",
+       "message" : "{Motivo del error}"
+     },
+     ...
+  ]
+}
 ```
+500 Server Error
+
+```
+HTTP/1.1 500 Internal Server Error
+{
+   "error" : "Not Found"
+}
+```
+# <a name='currency_exchange'></a> Currency_Exchange
+
+## <a name='amount-conversion'></a> Amount Conversion
+[Back to top](#top)
+
+<p>Convert an amount from a currency to another.</p>
+
+	GET /v1/exchanger/
+
+
+
+
+
+### Parameter Parameters
+
+| Name     | Type       | Description                           |
+|:---------|:-----------|:--------------------------------------|
+|  amount | Numeric | <p>Amount to convert</p>|
+|  originCurrency | String | <p>The origin currency of the amount</p>|
+|  destinationCurrency | String | <p>The destination currency of the amount</p>|
+
+
+### Success Response
+
+Success-Response:
+
+```
+HTTP/1.1 200 Ok
+{
+ "currencyNumericCode": <value>,
+ "amountConverted": <value>,
+ "currencyAbbreviation": <value>,
+ "currencySymbol": <value>
+}
+```
+
+
+### Error Response
 
 400 Bad Request
 
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{error motive}"
+   "messages" : [
+     {
+       "path" : "{Nombre de la propiedad}",
+       "message" : "{Motivo del error}"
+     },
+     ...
+  ]
 }
 ```
 500 Server Error
 
 ```
-HTTP/1.1 500 Server Error
+HTTP/1.1 500 Internal Server Error
 {
-    "error" : "{error motive}"
+   "error" : "Not Found"
 }
 ```
-
-## <a name='convert-article-price'></a> Convert Article's Price
+## <a name='convert-article-price'></a> Convert Article Price
 [Back to top](#top)
 
-<p>Convert an article's price to a currency.</p>
+<p>Gets the article's price and converts it to the specified currency.</p>
 
-```
 	GET /v1/exchanger/articles/:articleId/
-```
 
 
-### Examples
 
-Parametros:
-Ciurrent: Lista de moneda separadas por ,, Ejemploe:
 
-Body
 
-```
-{
-    "currency": [<value>...]
-}
-```
+### Parameter Parameters
 
-Header Autorización
+| Name     | Type       | Description                           |
+|:---------|:-----------|:--------------------------------------|
+|  currency[] | String | <p>Currency list separated with ,</p>|
 
-```
-Authorization=bearer {token}
-```
 
 ### Success Response
 
-Response
+Success-Response:
 
 ```
-HTTP/1.1 200 OK
+HTTP/1.1 200 Ok
 {
     "articleId": <value>,
     "conversions": {
@@ -133,388 +222,163 @@ HTTP/1.1 200 OK
             "currencySymbol": <value>
         },
         {...}
-    }
-    
-}
+      }
+ }
 ```
 
 
 ### Error Response
-
-401 Unauthorized
-
-```
-HTTP/1.1 401 Unauthorized
-```
 
 400 Bad Request
 
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{error motive}"
+   "messages" : [
+     {
+       "path" : "{Nombre de la propiedad}",
+       "message" : "{Motivo del error}"
+     },
+     ...
+  ]
 }
 ```
 500 Server Error
 
 ```
-HTTP/1.1 500 Server Error
+HTTP/1.1 500 Internal Server Error
 {
-    "error" : "{error motive}"
+   "error" : "Not Found"
 }
 ```
-## <a name='$convert-cart-price-amount'></a> Convert Cart's Price Amount
+## <a name='convert-order-price-amount'></a> Convert Order Price Amount
 [Back to top](#top)
 
-<p>Obtiene el monto total de una orden y lo convierte a la moneda especificada.</p>
+<p>Gets the total amount of an order and converts it to the specified currency.</p>
 
-```
 	GET /v1/exchanger/orders/:orderId
-```
 
 
-### Examples
 
-Body
 
-```
-{
-    "currency": [<value>...]
-}
-```
 
-Header Autorización
+### Parameter Parameters
 
-```
-Authorization=bearer {token}
-```
+| Name     | Type       | Description                           |
+|:---------|:-----------|:--------------------------------------|
+|  currency[] | String | <p>Currency list separated with ,</p>|
+
 
 ### Success Response
 
-Response
+Success-Response:
 
 ```
-HTTP/1.1 200 OK
+HTTP/1.1 200 Ok
 {
-    {
-        "orderId": <value>,
-        "conversions": {
-            {
-                "idCurrency": <value>,
-                "currencyNumericCode": <value>,
-                "amountConverted": <value>,
-                "currencyAbbreviation": <value>,
-                "currencySymbol": <value>
-            },
-            {...}
-        }
-    },
-    {...}
-    
-}
-```
-
-
-### Error Response
-
-401 Unauthorized
-
-```
-HTTP/1.1 401 Unauthorized
-```
-400 Bad Request
-
-```
-HTTP/1.1 400 Bad Request
-{
-    "error" : "{error motive}"
-}
-```
-500 Server Error
-
-```
-HTTP/1.1 500 Server Error
-{
-    "error" : "{error motive}"
-}
-```
-
-# <a name='#cotizacion'></a> Cotización
-
-## <a name='#obtener-cotizacion'></a> Obtener cotización
-
-[Back to top](#top)
-
-<p>Obtiene la cotización actual de una moneda con respecto a otra</p>
-
-```
-  GET /v1/exchanger/currency/price
-```
-
-
-### Examples
-
-Body
-
-```
-{
-    "monedasOrigen": <value>,
-    "monedasDestino": <value>
-}
-```
-
-Header Autorización
-
-```
-Authorization=bearer {token}
-```
-
-### Success Response
-
-Response
-
-```
-HTTP/1.1 200 OK
-{
-    "originCurrency" {
-        "idCurrency": <value>,
-        "currencyNumericCode": <value>,
-        "monto": <value>,
-        "currencyAbbreviation": <value>,
-        "currencySymbol": <value>
-    },
-    "destinationCurrency" {
-        "idCurrency": <value>,
-        "currencyNumericCode": <value>,
-        "monto": <value>,
-        "currencyAbbreviation": <value>,
-        "currencySymbol": <value>
+    "orderId": <value>,
+    "conversions": {
+        {
+            "currencyNumericCode": <value>,
+            "amountConverted": <value>,
+            "currencyAbbreviation": <value>,
+            "currencySymbol": <value>
+        },
+        {...}
     }
-}
+ }
 ```
 
 
 ### Error Response
 
-401 Unauthorized
-
-```
-HTTP/1.1 401 Unauthorized
-```
 400 Bad Request
 
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{error motive}"
+   "messages" : [
+     {
+       "path" : "{Nombre de la propiedad}",
+       "message" : "{Motivo del error}"
+     },
+     ...
+  ]
 }
 ```
 500 Server Error
 
 ```
-HTTP/1.1 500 Server Error
+HTTP/1.1 500 Internal Server Error
 {
-    "error" : "{error motive}"
+   "error" : "Not Found"
 }
 ```
+# <a name='quotation'></a> Quotation
 
-# <a name='#abm-monedas'></a> ABM Monedas
-
-## <a name='#alta-moneda'></a> Alta Moneda
-
+## <a name='get-quote'></a> Get Quote
 [Back to top](#top)
 
-<p>Da de alta una nueva moneda. Se requiere rol de administrador.</p>
+<p>Gets the direct conversion of a currency</p>
 
-```
-  POST /v1/exchanger/currency/
-```
+	GET /v1/exchanger/currency/price
 
-### Examples
 
-Body
 
-```
-{
-    "currencyNumericCode": <value>,
-    "currencyAbbreviation": <value>,
-    "currencySymbol": <value>,
-    "descripcionMoneda": <value>,
-    "accion":"ALTA"
-}
-```
-Header Autorización
 
-```
-Authorization=bearer {token}
-```
+
+### Parameter Parameters
+
+| Name     | Type       | Description                           |
+|:---------|:-----------|:--------------------------------------|
+|  originCurrency | String | <p>The origin currency</p>|
+|  destinationCurrency | String | <p>The destination currency</p>|
+
 
 ### Success Response
 
-Response
+Success-Response:
 
 ```
-HTTP/1.1 200 OK
+HTTP/1.1 200 Ok
 {
-    "idCurrency": <value>,
-    "currencyNumericCode": <value>,
-    "currencyAbbreviation": <value>,
-    "currencySymbol": <value>,
-    "descripcionMoneda": <value>
+   "originCurrency" {
+       "currencyNumericCode": <value>,
+       "amount": <value>,
+       "currencyAbbreviation": <value>,
+       "currencySymbol": <value>
+   },
+   "destinationCurrency" {
+       "currencyNumericCode": <value>,
+       "amount": <value>,
+       "currencyAbbreviation": <value>,
+       "currencySymbol": <value>
+   }
 }
 ```
 
 
 ### Error Response
 
-401 Unauthorized
-
-```
-HTTP/1.1 401 Unauthorized
-```
 400 Bad Request
 
 ```
 HTTP/1.1 400 Bad Request
 {
-    "error" : "{error motive}"
+   "messages" : [
+     {
+       "path" : "{Nombre de la propiedad}",
+       "message" : "{Motivo del error}"
+     },
+     ...
+  ]
 }
 ```
 500 Server Error
 
 ```
-HTTP/1.1 500 Server Error
+HTTP/1.1 500 Internal Server Error
 {
-    "error" : "{error motive}"
-}
-```
-
-## <a name='#baja-moneda'></a> Baja Moneda
-
-[Back to top](#top)
-
-<p>Da de baja una moneda (baja lógica). Se requiere rol de administrador.</p>
-
-```
-  DELETE /v1/exchanger/:currencyId/
-```
-
-
-### Examples
-
-Body
-
-```
-{
-    "idCurrency": <value>,
-    "accion": "BAJA"
-}
-```
-Header Autorización
-
-```
-Authorization=bearer {token}
-```
-
-### Success Response
-
-200 Response
-
-```
-HTTP/1.1 200 OK
-```
-
-
-### Error Response
-
-401 Unauthorized
-
-```
-HTTP/1.1 401 Unauthorized
-```
-
-400 Bad Request
-
-```
-HTTP/1.1 400 Bad Request
-{
-    "error" : "{error motive}"
-}
-```
-500 Server Error
-
-```
-HTTP/1.1 500 Server Error
-{
-    "error" : "{error motive}"
-}
-```
-
-## <a name='#modificar-moneda'></a> Modificar Moneda
-
-[Back to top](#top)
-
-<p>Realiza una modificación a una moneda. Se requiere rol de administrador.</p>
-
-```
-  POST /v1/exchanger/:currencyId/
-```
-
-
-### Examples
-
-Body
-
-```
-{
-    "currencyNumericCode": <value>,
-    "currencyAbbreviation": <value>,
-    "currencySymbol": <value>,
-    "descripcionMoneda": <value>,
-}
-```
-Header Autorización
-
-```
-Authorization=bearer {token}
-```
-
-### Success Response
-
-Response
-
-```
-HTTP/1.1 200 OK
-{
-    "idCurrency": <value>,
-    "currencyNumericCode": <value>,
-    "currencyAbbreviation": <value>,
-    "currencySymbol": <value>,
-    "descripcionMoneda": <value>
-}
-```
-
-
-### Error Response
-
-401 Unauthorized
-
-```
-HTTP/1.1 401 Unauthorized
-```
-400 Bad Request
-
-```
-HTTP/1.1 400 Bad Request
-{
-    "error" : "{error motive}"
-}
-```
-500 Server Error
-
-```
-HTTP/1.1 500 Server Error
-{
-    "error" : "{error motive}"
+   "error" : "Not Found"
 }
 ```

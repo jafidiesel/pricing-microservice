@@ -2,13 +2,28 @@
 El conversor de moneda nos permitirá convertir un monto de una moneda a otra. Esto se puede lograr de varias formas:
 
 - Convertir un monto especificando de una moneda B a una moneda A
-- Convertir un el precio de un articulo a una moneda B
-- Convertir el monto total de un carrito a una moneda B
+- Convertir el precio de un articulo a una moneda B
+- Convertir el monto total de una orden a una moneda B
 
 Además nos permitirá:
 
 - Obtener la última cotización de una moneta B con respecto a una moneda A
 - Realizar ABM de monedas
+
+
+## **Casos de uso**:
+
+### Convertir un monto especificando de una moneda B a una moneda A
+
+- Si bien esta llamada puede realizarse en cualquier método, no se pensó una aplicación específica.
+
+### Convertir el precio de un articulo a una moneda B
+
+- Pensado para ser utilizado cuando se consulta los datos de un artículo (ej. ver información de un artículo )
+
+### Convertir el monto total de una orden a una moneda B
+
+- Pensado para convertir el monto total de una orden a una moneda. Esto generalmente se da cuando hemos llegado al paso final previo a comprar en donde se nos muestra la información completa de la orden (precio, cantidad de articulos, etc)
 
 ## Dependencias
 
@@ -20,9 +35,9 @@ Para realizar cualquier acción es necesario estar logueado.
 
 Se consulta el catalogo para obtener información pertinente del artículo(ej. el monto y la moneda)
 
-### Cart
+### Order
 
-Se consulta información del carrito por ID para obtener el monto total.
+Se consulta información de la orden por ID para obtener el monto total.
 
 ### Node 8
 
@@ -53,7 +68,7 @@ La documentación necesita ser generada manualmente ejecutando la siguiente line
 
 ```bash
 apidoc -o src
-apidoc-markdown2 -p src -o README-API.md
+apidoc-markdown2 -p src/apidoc -o README-API.md
 ```
 
 Esto nos genera una carpeta src con la documentación, esta carpeta debe estar presente desde donde se ejecute el proyecto, aunque se puede configurar desde el archivo de properties.
@@ -67,7 +82,7 @@ Esto nos genera una carpeta src con la documentación, esta carpeta debe estar p
 
 [How to install and cofigure webpack + babel7](https://medium.com/oredi/webpack-with-babel-7-b61f7caa9565)
 
-Una vez que tenemos instalado y configurado webpack + babel7 corremos el siguiente comando para transpilar y "empaquetar" el código:
+Una vez que tenemos instalado y configurado webpack + babel7 corremos el siguiente comando para transpilar de ES6 a ES5 y "empaquetar" el código:
 ```
 npm run build
 ```
