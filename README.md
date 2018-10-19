@@ -49,6 +49,35 @@ Seguir los pasos de instalación del sitio oficial
 
 Ver tutorial de instalación en [README.md](../README.md) en la raíz.
 
+Para ejecutar mongo debemos levantar **mongodb service**:
+
+```
+sudo systemctl start mongod
+sudo systemctl enable mongod
+```
+
+Para confirmar que esten andando debemos ejecutar
+
+```
+// Check ports in use
+netstat -plntu | grep 27017
+
+// Check service status
+sudo service mongod status
+```
+
+Luego debemos ejecutar
+```
+mongo
+```
+
+y 
+```
+mongodb-compass
+```
+
+Fuente: https://scotch.io/@micwanyoike/getting-started-with-mongodb-in-linux
+
 ## Apidoc
 
 Apidoc es una herramienta que genera documentación de apis para proyectos node (ver [Apidoc](http://apidocjs.com/)).
@@ -73,6 +102,13 @@ apidoc-markdown2 -p src/apidoc -o README-API.md
 
 Esto nos genera una carpeta src con la documentación, esta carpeta debe estar presente desde donde se ejecute el proyecto, aunque se puede configurar desde el archivo de properties.
 
+## RabbitMQ
+```
+rabbitmqctl start_app
+rabbitmqctl stop_app
+rabbitmqctl cluster_status
+```
+fuente: https://linux.die.net/man/1/rabbitmqctl
 
 ## webpack + babel7
 
