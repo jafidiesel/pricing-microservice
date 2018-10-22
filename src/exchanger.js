@@ -21,9 +21,10 @@ export default (function (window, document, containerName){
  *      HTTP/1.1 200 Ok
  *      {
  *       "currencyNumericCode": <value>,
- *       "amountConverted": <value>,
+ *       "currencyDescription": <value>,
  *       "currencyAbbreviation": <value>,
- *       "currencySymbol": <value>
+ *       "currencySymbol": <value>,
+ *       "amountConverted": <value>
  *      }
  *
  *  @apiUse ParamValidationErrors
@@ -54,11 +55,12 @@ export function convertAmount(amount, originCurrency, destinationCurrency) {
  *          "articleId": <value>,
  *          "conversions": {
  *              {
- *                  "idCurrency": <value>,
+ *                  "currencyId": <value>,
  *                  "currencyNumericCode": <value>,
- *                  "amountConverted": <value>,
+ *                  "currencyDescription": <value>,
  *                  "currencyAbbreviation": <value>,
- *                  "currencySymbol": <value>
+ *                  "currencySymbol": <value>,
+ *                  "amountConverted": <value>
  *              },
  *              {...}
  *            }
@@ -92,9 +94,10 @@ export function convertArticle( idArticle, conversions ) {
  *          "conversions": {
  *              {
  *                  "currencyNumericCode": <value>,
- *                  "amountConverted": <value>,
+ *                  "currencyDescription": <value>,
  *                  "currencyAbbreviation": <value>,
- *                  "currencySymbol": <value>
+ *                  "currencySymbol": <value>,
+ *                  "amountConverted": <value>
  *              },
  *              {...}
  *          }
@@ -127,15 +130,17 @@ export function convertOrder( idOrder, conversions ) {
  *      {
  *         "originCurrency" {
  *             "currencyNumericCode": <value>,
- *             "amount": <value>,
+ *             "currencyDescription": <value>,
  *             "currencyAbbreviation": <value>,
- *             "currencySymbol": <value>
+ *             "currencySymbol": <value>,
+ *             "amount": <value>
  *         },
  *         "destinationCurrency" {
  *             "currencyNumericCode": <value>,
- *             "amount": <value>,
+ *             "currencyDescription": <value>,
  *             "currencyAbbreviation": <value>,
- *             "currencySymbol": <value>
+ *             "currencySymbol": <value>,
+ *             "amount": <value>
  *         }
  *      }
  *

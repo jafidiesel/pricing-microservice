@@ -4,7 +4,6 @@
 Currency exchange microservice
 
 - [CRUD_Currencies](#crud_currencies)
-	- [Delete Currency](#delete-currency)
 	- [Read Currency](#read-currency)
 	
 - [Currency_Exchange](#currency_exchange)
@@ -19,63 +18,13 @@ Currency exchange microservice
 	- [Currency Updated](#currency-updated)
 	
 - [RabbitMQ_POST](#rabbitmq_post)
-	- [Currency Deleted](#currency-deleted)
+	- [Delete Currency](#delete-currency)
+	- [Update Currency](#update-currency)
 	
 
 
 # <a name='crud_currencies'></a> CRUD_Currencies
 
-## <a name='delete-currency'></a> Delete Currency
-[Back to top](#top)
-
-<p>Delete a currency</p>
-
-	POST /v1/exchanger/currency/
-
-
-
-
-
-### Parameter Parameters
-
-| Name     | Type       | Description                           |
-|:---------|:-----------|:--------------------------------------|
-|  currencyId | Numeric | <p>The id of a currency</p>|
-
-
-### Success Response
-
-Success-Response:
-
-```
-HTTP/1.1 200 Ok
-```
-
-
-### Error Response
-
-400 Bad Request
-
-```
-HTTP/1.1 400 Bad Request
-{
-   "messages" : [
-     {
-       "path" : "{Nombre de la propiedad}",
-       "message" : "{Motivo del error}"
-     },
-     ...
-  ]
-}
-```
-500 Server Error
-
-```
-HTTP/1.1 500 Internal Server Error
-{
-   "error" : "Not Found"
-}
-```
 ## <a name='read-currency'></a> Read Currency
 [Back to top](#top)
 
@@ -102,6 +51,7 @@ Success-Response:
 HTTP/1.1 200 Ok
 {
     "currencyNumericCode": <value>,
+    "currencyDescription": <value>,
     "currencyAbbreviation": <value>,
     "currencySymbol": <value>
 }
@@ -162,9 +112,10 @@ Success-Response:
 HTTP/1.1 200 Ok
 {
  "currencyNumericCode": <value>,
- "amountConverted": <value>,
+ "currencyDescription": <value>,
  "currencyAbbreviation": <value>,
- "currencySymbol": <value>
+ "currencySymbol": <value>,
+ "amountConverted": <value>
 }
 ```
 
@@ -221,11 +172,12 @@ HTTP/1.1 200 Ok
     "articleId": <value>,
     "conversions": {
         {
-            "idCurrency": <value>,
+            "currencyId": <value>,
             "currencyNumericCode": <value>,
-            "amountConverted": <value>,
+            "currencyDescription": <value>,
             "currencyAbbreviation": <value>,
-            "currencySymbol": <value>
+            "currencySymbol": <value>,
+            "amountConverted": <value>
         },
         {...}
       }
@@ -286,9 +238,10 @@ HTTP/1.1 200 Ok
     "conversions": {
         {
             "currencyNumericCode": <value>,
-            "amountConverted": <value>,
+            "currencyDescription": <value>,
             "currencyAbbreviation": <value>,
-            "currencySymbol": <value>
+            "currencySymbol": <value>,
+            "amountConverted": <value>
         },
         {...}
     }
@@ -350,15 +303,17 @@ HTTP/1.1 200 Ok
 {
    "originCurrency" {
        "currencyNumericCode": <value>,
-       "amount": <value>,
+       "currencyDescription": <value>,
        "currencyAbbreviation": <value>,
-       "currencySymbol": <value>
+       "currencySymbol": <value>,
+       "amount": <value>
    },
    "destinationCurrency" {
        "currencyNumericCode": <value>,
-       "amount": <value>,
+       "currencyDescription": <value>,
        "currencyAbbreviation": <value>,
-       "currencySymbol": <value>
+       "currencySymbol": <value>,
+       "amount": <value>
    }
 }
 ```
@@ -408,7 +363,7 @@ HTTP/1.1 500 Internal Server Error
 ```
 {
   "currencyNumericCode": <value>,
-  "description": <value>,
+  "currencyDescription": <value>,
   "currencyAbbreviation": <value>,
   "currencySymbol": <value>
 }
@@ -417,7 +372,7 @@ HTTP/1.1 500 Internal Server Error
 
 # <a name='rabbitmq_post'></a> RabbitMQ_POST
 
-## <a name='currency-deleted'></a> Currency Deleted
+## <a name='delete-currency'></a> Delete Currency
 [Back to top](#top)
 
 <p>Currency Exchanger send a message to delete data from a currency.</p>
@@ -433,6 +388,27 @@ HTTP/1.1 500 Internal Server Error
 | Name     | Type       | Description                           |
 |:---------|:-----------|:--------------------------------------|
 |  currencyId | Numeric | <p>The id of a currency</p>|
+
+
+
+
+## <a name='update-currency'></a> Update Currency
+[Back to top](#top)
+
+<p>Currency Exchanger send a message to update data from a currency.</p>
+
+	DIRECT exchanger/currency-updated
+
+
+
+
+
+### Parameter Parameters
+
+| Name     | Type       | Description                           |
+|:---------|:-----------|:--------------------------------------|
+|  currencyId | Numeric | <p>The id of a currency</p>|
+|  currencyDescription | String | <p>The description of a currency</p>|
 
 
 

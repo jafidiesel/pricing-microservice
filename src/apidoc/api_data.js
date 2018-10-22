@@ -1,57 +1,5 @@
 define({ "api": [
   {
-    "type": "post",
-    "url": "/v1/exchanger/currency/",
-    "title": "Delete Currency",
-    "name": "deleteCurrency",
-    "group": "CRUD_Currencies",
-    "permission": [
-      {
-        "name": "admin"
-      }
-    ],
-    "description": "<p>Delete a currency</p>",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "String",
-            "optional": false,
-            "field": "currencyNumericCode",
-            "description": "<p>The origin currency</p>"
-          }
-        ]
-      }
-    },
-    "success": {
-      "examples": [
-        {
-          "title": "Success-Response:",
-          "content": "HTTP/1.1 200 Ok",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "./src/CRUDCurrencies.js",
-    "groupTitle": "CRUD_Currencies",
-    "error": {
-      "examples": [
-        {
-          "title": "400 Bad Request",
-          "content": "HTTP/1.1 400 Bad Request\n{\n   \"messages\" : [\n     {\n       \"path\" : \"{Nombre de la propiedad}\",\n       \"message\" : \"{Motivo del error}\"\n     },\n     ...\n  ]\n}",
-          "type": "json"
-        },
-        {
-          "title": "500 Server Error",
-          "content": "HTTP/1.1 500 Internal Server Error\n{\n   \"error\" : \"Not Found\"\n}",
-          "type": "json"
-        }
-      ]
-    }
-  },
-  {
     "type": "get",
     "url": "/v1/exchanger/currency/",
     "title": "Read Currency",
@@ -68,10 +16,10 @@ define({ "api": [
         "Parameter": [
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Numeric",
             "optional": false,
-            "field": "currencyNumericCode",
-            "description": "<p>The numeric code of a currency</p>"
+            "field": "currencyId",
+            "description": "<p>The id of a currency</p>"
           }
         ]
       }
@@ -80,7 +28,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 Ok\n{\n    \"currencyNumericCode\": <value>,\n    \"currencyAbbreviation\": <value>,\n    \"currencySymbol\": <value>\n}",
+          "content": "HTTP/1.1 200 Ok\n{\n    \"currencyNumericCode\": <value>,\n    \"currencyDescription\": <value>,\n    \"currencyAbbreviation\": <value>,\n    \"currencySymbol\": <value>\n}",
           "type": "json"
         }
       ]
@@ -146,7 +94,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 Ok\n{\n \"currencyNumericCode\": <value>,\n \"amountConverted\": <value>,\n \"currencyAbbreviation\": <value>,\n \"currencySymbol\": <value>\n}",
+          "content": "HTTP/1.1 200 Ok\n{\n \"currencyNumericCode\": <value>,\n \"currencyDescription\": <value>,\n \"currencyAbbreviation\": <value>,\n \"currencySymbol\": <value>,\n \"amountConverted\": <value>\n}",
           "type": "json"
         }
       ]
@@ -198,7 +146,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 Ok\n{\n    \"articleId\": <value>,\n    \"conversions\": {\n        {\n            \"idCurrency\": <value>,\n            \"currencyNumericCode\": <value>,\n            \"amountConverted\": <value>,\n            \"currencyAbbreviation\": <value>,\n            \"currencySymbol\": <value>\n        },\n        {...}\n      }\n }",
+          "content": "HTTP/1.1 200 Ok\n{\n    \"articleId\": <value>,\n    \"conversions\": {\n        {\n            \"currencyId\": <value>,\n            \"currencyNumericCode\": <value>,\n            \"currencyDescription\": <value>,\n            \"currencyAbbreviation\": <value>,\n            \"currencySymbol\": <value>,\n            \"amountConverted\": <value>\n        },\n        {...}\n      }\n }",
           "type": "json"
         }
       ]
@@ -250,7 +198,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 Ok\n{\n    \"orderId\": <value>,\n    \"conversions\": {\n        {\n            \"currencyNumericCode\": <value>,\n            \"amountConverted\": <value>,\n            \"currencyAbbreviation\": <value>,\n            \"currencySymbol\": <value>\n        },\n        {...}\n    }\n }",
+          "content": "HTTP/1.1 200 Ok\n{\n    \"orderId\": <value>,\n    \"conversions\": {\n        {\n            \"currencyNumericCode\": <value>,\n            \"currencyDescription\": <value>,\n            \"currencyAbbreviation\": <value>,\n            \"currencySymbol\": <value>,\n            \"amountConverted\": <value>\n        },\n        {...}\n    }\n }",
           "type": "json"
         }
       ]
@@ -309,7 +257,7 @@ define({ "api": [
       "examples": [
         {
           "title": "Success-Response:",
-          "content": "HTTP/1.1 200 Ok\n{\n   \"originCurrency\" {\n       \"currencyNumericCode\": <value>,\n       \"amount\": <value>,\n       \"currencyAbbreviation\": <value>,\n       \"currencySymbol\": <value>\n   },\n   \"destinationCurrency\" {\n       \"currencyNumericCode\": <value>,\n       \"amount\": <value>,\n       \"currencyAbbreviation\": <value>,\n       \"currencySymbol\": <value>\n   }\n}",
+          "content": "HTTP/1.1 200 Ok\n{\n   \"originCurrency\" {\n       \"currencyNumericCode\": <value>,\n       \"currencyDescription\": <value>,\n       \"currencyAbbreviation\": <value>,\n       \"currencySymbol\": <value>,\n       \"amount\": <value>\n   },\n   \"destinationCurrency\" {\n       \"currencyNumericCode\": <value>,\n       \"currencyDescription\": <value>,\n       \"currencyAbbreviation\": <value>,\n       \"currencySymbol\": <value>,\n       \"amount\": <value>\n   }\n}",
           "type": "json"
         }
       ]
@@ -331,6 +279,81 @@ define({ "api": [
         }
       ]
     }
+  },
+  {
+    "type": "direct",
+    "url": "exchanger/currency-updated",
+    "title": "Currency Updated",
+    "group": "RabbitMQ_GET",
+    "description": "<p>Listening to messages to update a description of a currency.</p>",
+    "success": {
+      "examples": [
+        {
+          "title": "{",
+          "content": "{\n  \"currencyNumericCode\": <value>,\n  \"currencyDescription\": <value>,\n  \"currencyAbbreviation\": <value>,\n  \"currencySymbol\": <value>\n}",
+          "type": "json"
+        }
+      ]
+    },
+    "version": "0.0.0",
+    "filename": "./src/rabbit/CRUD.js",
+    "groupTitle": "RabbitMQ_GET",
+    "name": "DirectExchangerCurrencyUpdated"
+  },
+  {
+    "type": "direct",
+    "url": "exchanger/currency-deleted",
+    "title": "Delete Currency",
+    "group": "RabbitMQ_POST",
+    "description": "<p>Currency Exchanger send a message to delete data from a currency.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Numeric",
+            "optional": false,
+            "field": "currencyId",
+            "description": "<p>The id of a currency</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./src/rabbit/CRUD.js",
+    "groupTitle": "RabbitMQ_POST",
+    "name": "DirectExchangerCurrencyDeleted"
+  },
+  {
+    "type": "direct",
+    "url": "exchanger/currency-updated",
+    "title": "Update Currency",
+    "group": "RabbitMQ_POST",
+    "description": "<p>Currency Exchanger send a message to update data from a currency.</p>",
+    "parameter": {
+      "fields": {
+        "Parameter": [
+          {
+            "group": "Parameter",
+            "type": "Numeric",
+            "optional": false,
+            "field": "currencyId",
+            "description": "<p>The id of a currency</p>"
+          },
+          {
+            "group": "Parameter",
+            "type": "String",
+            "optional": false,
+            "field": "currencyDescription",
+            "description": "<p>The description of a currency</p>"
+          }
+        ]
+      }
+    },
+    "version": "0.0.0",
+    "filename": "./src/rabbit/CRUD.js",
+    "groupTitle": "RabbitMQ_POST",
+    "name": "DirectExchangerCurrencyUpdated"
   },
   {
     "type": "",
