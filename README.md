@@ -78,6 +78,19 @@ mongodb-compass
 
 Fuente: https://scotch.io/@micwanyoike/getting-started-with-mongodb-in-linux
 
+
+## RabbitMQ
+```
+rabbitmqctl start_app
+rabbitmqctl stop_app
+rabbitmqctl cluster_status
+```
+fuente: https://linux.die.net/man/1/rabbitmqctl
+
+#### Best practices to design APIs with AMQP
+
+http://www.thedevpiece.com/best-practices-to-design-apis-with-amqp/
+
 ## Apidoc
 
 Apidoc es una herramienta que genera documentación de apis para proyectos node (ver [Apidoc](http://apidocjs.com/)).
@@ -96,19 +109,12 @@ npm install -g apidoc-markdown2
 La documentación necesita ser generada manualmente ejecutando la siguiente linea en la carpeta raíz :
 
 ```bash
-apidoc -o src
+apidoc -o src/apidoc
 apidoc-markdown2 -p src/apidoc -o README-API.md
 ```
 
 Esto nos genera una carpeta src con la documentación, esta carpeta debe estar presente desde donde se ejecute el proyecto, aunque se puede configurar desde el archivo de properties.
 
-## RabbitMQ
-```
-rabbitmqctl start_app
-rabbitmqctl stop_app
-rabbitmqctl cluster_status
-```
-fuente: https://linux.die.net/man/1/rabbitmqctl
 
 ## webpack + babel7
 
