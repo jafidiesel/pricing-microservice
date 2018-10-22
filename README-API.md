@@ -15,6 +15,12 @@ Currency exchange microservice
 - [Quotation](#quotation)
 	- [Get Quote](#get-quote)
 	
+- [RabbitMQ_GET](#rabbitmq_get)
+	- [Currency Updated](#currency-updated)
+	
+- [RabbitMQ_POST](#rabbitmq_post)
+	- [Currency Deleted](#currency-deleted)
+	
 
 
 # <a name='crud_currencies'></a> CRUD_Currencies
@@ -34,7 +40,7 @@ Currency exchange microservice
 
 | Name     | Type       | Description                           |
 |:---------|:-----------|:--------------------------------------|
-|  currencyNumericCode | String | <p>The origin currency</p>|
+|  currencyId | Numeric | <p>The id of a currency</p>|
 
 
 ### Success Response
@@ -85,7 +91,7 @@ HTTP/1.1 500 Internal Server Error
 
 | Name     | Type       | Description                           |
 |:---------|:-----------|:--------------------------------------|
-|  currencyNumericCode | String | <p>The numeric code of a currency</p>|
+|  currencyId | Numeric | <p>The id of a currency</p>|
 
 
 ### Success Response
@@ -382,3 +388,52 @@ HTTP/1.1 500 Internal Server Error
    "error" : "Not Found"
 }
 ```
+# <a name='rabbitmq_get'></a> RabbitMQ_GET
+
+## <a name='currency-updated'></a> Currency Updated
+[Back to top](#top)
+
+<p>Listening to messages to update a description of a currency.</p>
+
+	DIRECT exchanger/currency-updated
+
+
+
+
+
+### Success Response
+
+{
+
+```
+{
+  "currencyNumericCode": <value>,
+  "description": <value>,
+  "currencyAbbreviation": <value>,
+  "currencySymbol": <value>
+}
+```
+
+
+# <a name='rabbitmq_post'></a> RabbitMQ_POST
+
+## <a name='currency-deleted'></a> Currency Deleted
+[Back to top](#top)
+
+<p>Currency Exchanger send a message to delete data from a currency.</p>
+
+	DIRECT exchanger/currency-deleted
+
+
+
+
+
+### Parameter Parameters
+
+| Name     | Type       | Description                           |
+|:---------|:-----------|:--------------------------------------|
+|  currencyId | Numeric | <p>The id of a currency</p>|
+
+
+
+
