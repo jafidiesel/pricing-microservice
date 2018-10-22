@@ -7,7 +7,7 @@
  *
  * @apiDescription Read a currency
  *
- * @apiParam {String} currencyNumericCode The numeric code of a currency
+ * @apiParam {Numeric} currencyId The id of a currency
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 Ok
@@ -23,7 +23,7 @@
  */
 
  
-export function readCurrency( currencyNumericCode ) {
+export function readCurrency( currencyId ) {
     
     return {};
 }
@@ -37,7 +37,7 @@ export function readCurrency( currencyNumericCode ) {
  *
  * @apiDescription Delete a currency
  *
- * @apiParam {String} currencyNumericCode The origin currency
+ * @apiParam {Numeric} currencyId The id of a currency
  *
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 Ok
@@ -48,7 +48,7 @@ export function readCurrency( currencyNumericCode ) {
  */
 
  
-export function deleteCurrency( currencyNumericCode ) {
+export function deleteCurrency( currencyId ) {
     
     return {};
 }
