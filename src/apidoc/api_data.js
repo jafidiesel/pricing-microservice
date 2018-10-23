@@ -282,54 +282,10 @@ define({ "api": [
   },
   {
     "type": "direct",
-    "url": "exchanger/currency-updated",
-    "title": "Currency Updated",
+    "url": "currency-order",
+    "title": "Get Order in Currency",
     "group": "RabbitMQ_GET",
-    "description": "<p>Listening to messages to update a description of a currency.</p>",
-    "success": {
-      "examples": [
-        {
-          "title": "{",
-          "content": "{\n  \"currencyNumericCode\": <value>,\n  \"currencyDescription\": <value>,\n  \"currencyAbbreviation\": <value>,\n  \"currencySymbol\": <value>\n}",
-          "type": "json"
-        }
-      ]
-    },
-    "version": "0.0.0",
-    "filename": "./src/rabbit/CRUD.js",
-    "groupTitle": "RabbitMQ_GET",
-    "name": "DirectExchangerCurrencyUpdated"
-  },
-  {
-    "type": "direct",
-    "url": "exchanger/currency-deleted",
-    "title": "Delete Currency",
-    "group": "RabbitMQ_POST",
-    "description": "<p>Currency Exchanger send a message to delete data from a currency.</p>",
-    "parameter": {
-      "fields": {
-        "Parameter": [
-          {
-            "group": "Parameter",
-            "type": "Numeric",
-            "optional": false,
-            "field": "currencyId",
-            "description": "<p>The id of a currency</p>"
-          }
-        ]
-      }
-    },
-    "version": "0.0.0",
-    "filename": "./src/rabbit/CRUD.js",
-    "groupTitle": "RabbitMQ_POST",
-    "name": "DirectExchangerCurrencyDeleted"
-  },
-  {
-    "type": "direct",
-    "url": "exchanger/currency-updated",
-    "title": "Update Currency",
-    "group": "RabbitMQ_POST",
-    "description": "<p>Currency Exchanger send a message to update data from a currency.</p>",
+    "description": "<p>Ask for the total amount of an Order in a currency</p>",
     "parameter": {
       "fields": {
         "Parameter": [
@@ -342,18 +298,18 @@ define({ "api": [
           },
           {
             "group": "Parameter",
-            "type": "String",
+            "type": "Numeric",
             "optional": false,
-            "field": "currencyDescription",
-            "description": "<p>The description of a currency</p>"
+            "field": "orderId",
+            "description": "<p>The id of an order</p>"
           }
         ]
       }
     },
     "version": "0.0.0",
     "filename": "./src/rabbit/CRUD.js",
-    "groupTitle": "RabbitMQ_POST",
-    "name": "DirectExchangerCurrencyUpdated"
+    "groupTitle": "RabbitMQ_GET",
+    "name": "DirectCurrencyOrder"
   },
   {
     "type": "",

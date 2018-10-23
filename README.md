@@ -1,29 +1,24 @@
 # CurrencyExchange-Microservice
 El conversor de moneda nos permitirá convertir un monto de una moneda a otra. Esto se puede lograr de varias formas:
 
-- Convertir un monto especificando de una moneda B a una moneda A
-- Convertir el precio de un articulo a una moneda B
-- Convertir el monto total de una orden a una moneda B
-
-Además nos permitirá:
-
-- Obtener la última cotización de una moneta B con respecto a una moneda A
-- Realizar ABM de monedas
-
-
 ## **Casos de uso**:
 
 ### Convertir un monto especificando de una moneda B a una moneda A
 
-- Si bien esta llamada puede realizarse en cualquier método, no se pensó una aplicación específica.
+- Esta llamada pretende ser la más utilizada para cuando se requiere convertir un monto. Esto le permite a cualquier microservicio convertir un monto enviado como parámetro. Ej. convertir el monto de un articulo, convertir el monto total de una orden.
 
-### Convertir el precio de un articulo a una moneda B
+### Convertir el monto total de una orden a una moneda B (síncrono)
 
-- Pensado para ser utilizado cuando se consulta los datos de un artículo (ej. ver información de un artículo )
+- Pensado para convertir el monto total de una orden a una moneda. Esto generalmente se da cuando hemos llegado al paso final previo a comprar en donde se nos muestra la información completa de la orden (precio, cantidad de artículos, etc). Si bien se ofrece que esto se realice de forma síncrona a modo informativo, se deja en manos de la llamada asíncrona la obtención del monto final para cuando se procese el pago final.
 
-### Convertir el monto total de una orden a una moneda B
+### Convertir el monto total de una orden a una moneda B (asíncrono)
+- Esta forma asíncrona permite obtener el total de una orden y  convertir el monto a una moneda determinada.
 
-- Pensado para convertir el monto total de una orden a una moneda. Esto generalmente se da cuando hemos llegado al paso final previo a comprar en donde se nos muestra la información completa de la orden (precio, cantidad de articulos, etc)
+### Leer información sobre una Currency
+- Utilizado cuando queremos visualizar información sobre una Currency para verificar si es correcta o no. Ej. panel de administración de Currencies
+
+### Obtener la cotización de una Currency respecto de otra
+-Utilizado para mostrar como referencia cuando se muestre información sobre la cotización de cierta moneda. Ej. Información a mostrar en la sección de “Cotizaciones”
 
 ## Dependencias
 

@@ -15,11 +15,7 @@ Currency exchange microservice
 	- [Get Quote](#get-quote)
 	
 - [RabbitMQ_GET](#rabbitmq_get)
-	- [Currency Updated](#currency-updated)
-	
-- [RabbitMQ_POST](#rabbitmq_post)
-	- [Delete Currency](#delete-currency)
-	- [Update Currency](#update-currency)
+	- [Get Order in Currency](#get-order-in-currency)
 	
 
 
@@ -345,39 +341,12 @@ HTTP/1.1 500 Internal Server Error
 ```
 # <a name='rabbitmq_get'></a> RabbitMQ_GET
 
-## <a name='currency-updated'></a> Currency Updated
+## <a name='get-order-in-currency'></a> Get Order in Currency
 [Back to top](#top)
 
-<p>Listening to messages to update a description of a currency.</p>
+<p>Ask for the total amount of an Order in a currency</p>
 
-	DIRECT exchanger/currency-updated
-
-
-
-
-
-### Success Response
-
-{
-
-```
-{
-  "currencyNumericCode": <value>,
-  "currencyDescription": <value>,
-  "currencyAbbreviation": <value>,
-  "currencySymbol": <value>
-}
-```
-
-
-# <a name='rabbitmq_post'></a> RabbitMQ_POST
-
-## <a name='delete-currency'></a> Delete Currency
-[Back to top](#top)
-
-<p>Currency Exchanger send a message to delete data from a currency.</p>
-
-	DIRECT exchanger/currency-deleted
+	DIRECT currency-order
 
 
 
@@ -388,27 +357,7 @@ HTTP/1.1 500 Internal Server Error
 | Name     | Type       | Description                           |
 |:---------|:-----------|:--------------------------------------|
 |  currencyId | Numeric | <p>The id of a currency</p>|
-
-
-
-
-## <a name='update-currency'></a> Update Currency
-[Back to top](#top)
-
-<p>Currency Exchanger send a message to update data from a currency.</p>
-
-	DIRECT exchanger/currency-updated
-
-
-
-
-
-### Parameter Parameters
-
-| Name     | Type       | Description                           |
-|:---------|:-----------|:--------------------------------------|
-|  currencyId | Numeric | <p>The id of a currency</p>|
-|  currencyDescription | String | <p>The description of a currency</p>|
+|  orderId | Numeric | <p>The id of an order</p>|
 
 
 
