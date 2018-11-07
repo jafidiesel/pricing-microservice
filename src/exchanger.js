@@ -152,6 +152,53 @@ export function convertOrder( idOrder, conversions ) {
  
 export function getQuote( originCurrency, destinationCurrency ) {
     
+    // Create a request variable and assign a new XMLHttpRequest object to it.
+    var request = new XMLHttpRequest();
+
+    var compact = 'ultra'; //optional
+    var query = originCurrency + '_' + destinationCurrency;
+    var apiUrl = 'https://free.currencyconverterapi.com/api/v6/convert?q=' + `${query}`;
+    console.log(apiUrl);
+
+    // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', apiUrl , true);
+
+    request.onload = function () {
+        // Begin accessing JSON data here
+        var data = JSON.parse(this.response);
+    //    console.log(data.results[query].val);
+
+        if( request.status >= 200 & request.status < 400 ){
+            
+            return data.results;
+        } else if(request.status == 400){
+            return{
+                "messages" : [
+                    {
+                    "path" : "{Nombre de la propiedad}",
+                    "message" : `${request.statusText}` 
+                    }
+                ]
+            };
+        } else if(request.status == 500){
+            return{
+                "error" : "Not Found"
+            };
+        } else{
+        
+            const errorMessage = document.createElement('marquee');
+            errorMessage.textContent = `Gah, it's not working!`;
+            app.appendChild(errorMessage);
+        }
+        
+    };
+
+
+    // Send request
+    request.send();
+
+
+
     return {};
 }
 
