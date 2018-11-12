@@ -14,8 +14,18 @@ var app = express();
 app.use(bodyParser.json());
 
 app.get('/', function(req, res) {
-    res.send('hola');
+    res.send('raiz');
 });
+
+app.get('/v1/exchanger/currency/price', function(req, res) {
+    res.send('getQuote');
+});
+
+app.post('/testing', function(req, res) {
+    res.send('Llamada post');
+    console.log(req.body);
+});
+
 
 app.listen(3010, function() {
     console.log('Escuchando en el puerto 3010');
