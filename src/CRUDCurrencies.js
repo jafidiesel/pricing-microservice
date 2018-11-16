@@ -28,3 +28,43 @@ export function readCurrency( currencyId ) {
     
     return {};
 }
+
+
+// Alta currency
+app.post('/v1/exchanger/currency/', function(req, res) {
+    var currencyToCreate = new Currency();
+    currencyToCreate.currencyNumericCode = req.body.currencyNumericCode;
+    currencyToCreate.currencyDescription = req.body.currencyDescription;
+    currencyToCreate.currencyAbbreviation = req.body.currencyAbbreviation;
+    currencyToCreate.currencySymbol = req.body.currencySymbol;
+
+    currencyToCreate.save(function(error, savedCurrency) {
+        if (error) return res.status(500).send(error);
+
+        res.status(201).json(savedCurrency);
+    });
+});
+
+
+
+// Read all currencies
+app.get('/v1/exchanger/currency/', function(req, res) {
+    Currency.find({}, function(error, currency) {
+        if (error) return res.status(500).send(error);
+        
+       res.json(currency);
+    }); 
+});
+
+// Get currency by Id
+app.get( '/v1/exchanger/currency/:idCurrency', function( req, res ){
+    Currency.findById(req.params.idCurrency, function(error, currency){
+        if (error) return res.status(500).send(error);
+
+        res.json(currency);
+    });
+} );
+
+
+
+

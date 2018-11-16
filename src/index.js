@@ -1,3 +1,7 @@
+//Vieja forma de importar modulos en node.js
+
+const exchanger = require('./exchanger');
+
 //import getQuote from "./exchanger.js";
 
 //import Controller from './Controller.js';
@@ -18,3 +22,4 @@ app.appendChild(container);
 
 console.log(getQuote('ARS', 'USD') );
 */
+

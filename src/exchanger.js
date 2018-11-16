@@ -1,9 +1,11 @@
-import Controller from './Controller.js';
-
+const server = require('./server/server');
+var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
+//import Controller from './Controller.js';
+/*
 export default (function (window, document, containerName){
     const controller = new Controller(window, document, containerName);
 })(window, document, 'container');
-
+*/
 
 /**
  * @api {get} /v1/exchanger/ Amount Conversion
@@ -32,12 +34,12 @@ export default (function (window, document, containerName){
  * 
  */
 
- 
+ /*
 export function convertAmount(amount, originCurrency, destinationCurrency) {
     
     return {};
 }
-
+*/
 
 /**
  * @api {get} /v1/exchanger/articles/:articleId/ Convert Article Price
@@ -71,11 +73,12 @@ export function convertAmount(amount, originCurrency, destinationCurrency) {
  * 
  */
 
- 
+ /*
 export function convertArticle( idArticle, conversions ) {
     
     return {};
 }
+*/
 
 /**
  * @api {get} /v1/exchanger/orders/:orderId Convert Order Price Amount
@@ -108,12 +111,12 @@ export function convertArticle( idArticle, conversions ) {
  * 
  */
 
- 
+ /*
 export function convertOrder( idOrder, conversions ) {
     
     return {};
 }
-
+*/
 /**
  * @api {get} /v1/exchanger/currency/price Get Quote
  * @apiName getQuote
@@ -149,7 +152,62 @@ export function convertOrder( idOrder, conversions ) {
  * 
  */
 
- 
+server.app().get('/v1/exchanger/currency/price', function(req, res) {
+
+    var originCurrency = req.query.originCurrency;
+    var destinationCurrency = req.query.destinationCurrency;
+
+    // Create a request variable and assign a new XMLHttpRequest object to it.
+    var request = new XMLHttpRequest();
+
+    var compact = 'ultra'; //optional
+    var query = originCurrency + '_' + destinationCurrency;
+    var apiUrl = 'https://free.currencyconverterapi.com/api/v6/convert?q=' + `${query}`;
+    console.log(apiUrl);
+    debugger;
+    // Open a new connection, using the GET request on the URL endpoint
+    request.open('GET', apiUrl , true);
+
+    request.onload = function () {
+        console.log(this.response);
+        // Begin accessing JSON data here
+        var data = JSON.parse(this.response);
+      
+        if( request.status >= 200 & request.status < 400 ){
+            
+            console.log(request.status);
+            console.log(data.results);
+            //res.send(data.results);
+        } else if(request.status == 400){
+            console.log(request.status);
+           /*  res.send({
+                "messages" : [
+                    {
+                    "path" : "{Nombre de la propiedad}",
+                    "message" : `${request.statusText}` 
+                    }
+                ]
+            }
+            ); */
+        } else if(request.status == 500){
+            console.log(request.status);
+            /* res.send({
+                "error" : "Not Found"
+            }); */
+        } else{
+            console.log(request.status);
+            const errorMessage = document.createElement('marquee');
+            errorMessage.textContent = `Gah, it's not working!`;
+            app.appendChild(errorMessage);
+        }
+    
+    }
+
+    // Send request
+    request.send();
+});
+
+ /*
 export function getQuote( originCurrency, destinationCurrency ) {
     
     // Create a request variable and assign a new XMLHttpRequest object to it.
@@ -201,7 +259,7 @@ export function getQuote( originCurrency, destinationCurrency ) {
 
     return {};
 }
-
+*/
 
 
 /**
