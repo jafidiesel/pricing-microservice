@@ -31,5 +31,8 @@ module.exports = {
     },
     app: function(){
         return app;
+    },
+    Currency: function(){
+        return Currency;
     }
 }

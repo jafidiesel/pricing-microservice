@@ -1,11 +1,6 @@
+'use strict'
 const server = require('./server/server');
-var XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
-//import Controller from './Controller.js';
-/*
-export default (function (window, document, containerName){
-    const controller = new Controller(window, document, containerName);
-})(window, document, 'container');
-*/
+const http = require('http');
 
 /**
  * @api {get} /v1/exchanger/ Amount Conversion
@@ -152,114 +147,58 @@ export function convertOrder( idOrder, conversions ) {
  * 
  */
 
-server.app().get('/v1/exchanger/currency/price', function(req, res) {
 
-    var originCurrency = req.query.originCurrency;
-    var destinationCurrency = req.query.destinationCurrency;
-
-    // Create a request variable and assign a new XMLHttpRequest object to it.
-    var request = new XMLHttpRequest();
-
+server.app().get('/v1/exchanger/currency/price', function(request, response) {
+    var originCurrency = "";
+    originCurrency = request.query.originCurrency;
+    var destinationCurrency = "";
+    destinationCurrency = request.query.destinationCurrency;
     var compact = 'ultra'; //optional
     var query = originCurrency + '_' + destinationCurrency;
-    var apiUrl = 'https://free.currencyconverterapi.com/api/v6/convert?q=' + `${query}`;
+    var apiUrl = 'http://free.currencyconverterapi.com/api/v6/convert?q=' + `${query}`;
     console.log(apiUrl);
-    debugger;
-    // Open a new connection, using the GET request on the URL endpoint
-    request.open('GET', apiUrl , true);
 
-    request.onload = function () {
-        console.log(this.response);
-        // Begin accessing JSON data here
-        var data = JSON.parse(this.response);
-      
-        if( request.status >= 200 & request.status < 400 ){
-            
-            console.log(request.status);
-            console.log(data.results);
-            //res.send(data.results);
-        } else if(request.status == 400){
-            console.log(request.status);
-           /*  res.send({
-                "messages" : [
-                    {
-                    "path" : "{Nombre de la propiedad}",
-                    "message" : `${request.statusText}` 
-                    }
-                ]
+    http.get(apiUrl, (resp) => {
+
+        console.log('http in process');
+        let data = '';
+        // Concatinate each chunk of data
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+          
+        resp.on('end', () => {
+            if( resp.statusCode >= 200 & resp.statusCode < 400 ){
+                if( originCurrency == null || destinationCurrency == null){
+                    response.json( JSON.parse( '{ "error" : "Empty params" }' ) );
+                } else{
+                    response.json(JSON.parse(data));
+                }
+                
+            }else if(resp.status == 400){
+                response.json(JSON.parse({
+                    "messages" : [
+                        {
+                        "path" : `${apiUrl}`,
+                        "message" : `${resp.statusMessage}` 
+                        }
+                    ]
+                } ));
+            } else if(resp.status == 500){
+                resp.on('end', () => {
+                    response.json( JSON.parse( '{ "error" : "Not Found" }' ) );
+                });
             }
-            ); */
-        } else if(request.status == 500){
-            console.log(request.status);
-            /* res.send({
-                "error" : "Not Found"
-            }); */
-        } else{
-            console.log(request.status);
-            const errorMessage = document.createElement('marquee');
-            errorMessage.textContent = `Gah, it's not working!`;
-            app.appendChild(errorMessage);
-        }
-    
-    }
-
-    // Send request
-    request.send();
-});
-
- /*
-export function getQuote( originCurrency, destinationCurrency ) {
-    
-    // Create a request variable and assign a new XMLHttpRequest object to it.
-    var request = new XMLHttpRequest();
-
-    var compact = 'ultra'; //optional
-    var query = originCurrency + '_' + destinationCurrency;
-    var apiUrl = 'https://free.currencyconverterapi.com/api/v6/convert?q=' + `${query}`;
-    console.log(apiUrl);
-
-    // Open a new connection, using the GET request on the URL endpoint
-    request.open('GET', apiUrl , true);
-
-    request.onload = function () {
-        // Begin accessing JSON data here
-        var data = JSON.parse(this.response);
-    //    console.log(data.results[query].val);
-
-        if( request.status >= 200 & request.status < 400 ){
             
-            return data.results;
-        } else if(request.status == 400){
-            return{
-                "messages" : [
-                    {
-                    "path" : "{Nombre de la propiedad}",
-                    "message" : `${request.statusText}` 
-                    }
-                ]
-            };
-        } else if(request.status == 500){
-            return{
-                "error" : "Not Found"
-            };
-        } else{
-        
-            const errorMessage = document.createElement('marquee');
-            errorMessage.textContent = `Gah, it's not working!`;
-            app.appendChild(errorMessage);
-        }
-        
-    };
-
-
-    // Send request
-    request.send();
-
-
-
-    return {};
-}
-*/
+        });
+  
+        // If an error occured, return the error to the user
+    }).on("error", (err) => {
+        response.json("Error: " + err.message);
+    });
+          
+});
+  
 
 
 /**
