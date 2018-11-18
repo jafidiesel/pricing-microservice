@@ -2,10 +2,10 @@ var mongoose = require('mongoose');
 //Modelo
 
 var currencySchema = new mongoose.Schema({
-    currencyNumericCode: { type: Number, required: true, unique: true },
-    currencyDescription: { type: String, required: true },
-    currencyAbbreviation: { type: String, required: true },
-    currencySymbol: { type: String, required: true }
+    currencyNumericCode: { type: Number, required: true },
+    currencyAlphaCode: { type: String, required: true , unique: true},
+    currencyCountry: { type: String, required: true },
+    currencyName: { type: String, required: true }
 });
 
 module.exports = {
