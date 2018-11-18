@@ -1,4 +1,4 @@
-
+const server = require('./server/server');
 /**
  * @api {get} /v1/exchanger/currency/ Read Currency
  * @apiName readCurrency
@@ -24,15 +24,15 @@
  */
 
  
-export function readCurrency( currencyId ) {
+/* export function readCurrency( currencyId ) {
     
     return {};
-}
+} */
 
 
 // Alta currency
-app.post('/v1/exchanger/currency/', function(req, res) {
-    var currencyToCreate = new Currency();
+server.app().post('/v1/exchanger/currency/', function(req, res) {
+    var currencyToCreate = new server.Currency();
     currencyToCreate.currencyNumericCode = req.body.currencyNumericCode;
     currencyToCreate.currencyDescription = req.body.currencyDescription;
     currencyToCreate.currencyAbbreviation = req.body.currencyAbbreviation;
@@ -48,8 +48,8 @@ app.post('/v1/exchanger/currency/', function(req, res) {
 
 
 // Read all currencies
-app.get('/v1/exchanger/currency/', function(req, res) {
-    Currency.find({}, function(error, currency) {
+server.app().get('/v1/exchanger/currency/', function(req, res) {
+    server.Currency().find({}, function(error, currency) {
         if (error) return res.status(500).send(error);
         
        res.json(currency);
@@ -57,8 +57,8 @@ app.get('/v1/exchanger/currency/', function(req, res) {
 });
 
 // Get currency by Id
-app.get( '/v1/exchanger/currency/:idCurrency', function( req, res ){
-    Currency.findById(req.params.idCurrency, function(error, currency){
+server.app().get( '/v1/exchanger/currency/:idCurrency', function( req, res ){
+    server.Currency().findById(req.params.idCurrency, function(error, currency){
         if (error) return res.status(500).send(error);
 
         res.json(currency);
