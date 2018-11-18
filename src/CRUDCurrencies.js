@@ -17,18 +17,6 @@ server.app().post('/v1/exchanger/currency/', function(req, res) {
     });
 });
 
-
-
-// Read all currencies
-server.app().get('/v1/exchanger/currency/', function(req, res) {
-    server.Currency().find({}, function(error, currency) {
-        if (error) return res.status(400).send(res.statusCode + " incorrect parameters.");
-        if (error) return res.status(500).send(error);
-        
-       res.json(currency);
-    }); 
-});
-
 /**
  * @api {get} /v1/exchanger/currency/ Read Currency
  * @apiName readCurrency
@@ -53,12 +41,23 @@ server.app().get('/v1/exchanger/currency/', function(req, res) {
  */
 server.app().get( '/v1/exchanger/currency/:currencyNumericCode', function( req, res ){
     server.Currency().find( { currencyNumericCode: req.params.currencyNumericCode } , function(error, currency){
-        if (error) return res.status(400).send(res.statusCode + " incorrect parameters.");
+        if (error) return res.status(400).send(res.statusCode + " incorrect parameters in currencyNumericCode.");
         if (error) return res.status(500).send(error);
 
         res.json(currency);
     });
 } );
+
+
+// Read all currencies
+server.app().get('/v1/exchanger/currency/', function(req, res) {
+    server.Currency().find({}, function(error, currency) {
+        if (error) return res.status(400).send(res.statusCode + " incorrect parameters.");
+        if (error) return res.status(500).send(error);
+        
+       res.json(currency);
+    }); 
+});
 
 
 

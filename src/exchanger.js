@@ -36,6 +36,9 @@ export function convertAmount(amount, originCurrency, destinationCurrency) {
 }
 */
 
+
+
+
 /**
  * @api {get} /v1/exchanger/articles/:articleId/ Convert Article Price
  * @apiName convertArticle
@@ -128,16 +131,16 @@ export function convertOrder( idOrder, conversions ) {
  *      {
  *         "originCurrency" {
  *             "currencyNumericCode": <value>,
- *             "currencyDescription": <value>,
- *             "currencyAbbreviation": <value>,
- *             "currencySymbol": <value>,
+ *             "currencyAlphaCode": <value>,
+ *             "currencyCountry": <value>,
+ *             "currencyName": <value>,
  *             "amount": <value>
  *         },
  *         "destinationCurrency" {
  *             "currencyNumericCode": <value>,
- *             "currencyDescription": <value>,
- *             "currencyAbbreviation": <value>,
- *             "currencySymbol": <value>,
+ *             "currencyAlphaCode": <value>,
+ *             "currencyCountry": <value>,
+ *             "currencyName": <value>,
  *             "amount": <value>
  *         }
  *      }
@@ -149,13 +152,51 @@ export function convertOrder( idOrder, conversions ) {
 
 
 server.app().get('/v1/exchanger/currency/price', function(request, response) {
-    var originCurrency = "";
-    originCurrency = request.query.originCurrency;
-    var destinationCurrency = "";
-    destinationCurrency = request.query.destinationCurrency;
-    var compact = 'ultra'; //optional
-    var query = originCurrency + '_' + destinationCurrency;
-    var apiUrl = 'http://free.currencyconverterapi.com/api/v6/convert?q=' + `${query}`;
+    let originCurrencyAbbreviation = "";
+    originCurrencyAbbreviation = request.query.originCurrency;
+    let destinationCurrencyAbbreviation = "";
+    destinationCurrencyAbbreviation = request.query.destinationCurrency;
+
+    let originCurrency = {
+        "currencyNumericCode": "",
+        "currencyAlphaCode": "",
+        "currencyCountry": "",
+        "currencyName": "",
+        "amount": ""
+        };
+    let destinationCurrency = {
+        "currencyNumericCode": "",
+        "currencyAlphaCode": "",
+        "currencyCountry": "",
+        "currencyName": "",
+        "amount": ""
+    }
+
+    server.Currency().find( { currencyAlphaCode: request.query.originCurrency } , function(error, currency){
+        if (error) return response.status(400).send(response.statusCode + " incorrect parameters in currencyAlphaCode.");
+        if (error) return response.status(500).send(error);
+
+        originCurrency.currencyNumericCode = currency[0].currencyNumericCode;
+        originCurrency.currencyAlphaCode = currency[0].currencyAlphaCode;
+        originCurrency.currencyCountry = currency[0].currencyCountry;
+        originCurrency.currencyName = currency[0].currencyName;
+
+    });
+
+    server.Currency().find( { currencyAlphaCode: request.query.destinationCurrency } , function(error, currency){
+        if (error) return response.status(400).send(response.statusCode + " incorrect parameters in currencyAlphaCode.");
+        if (error) return response.status(500).send(error);
+
+        destinationCurrency.currencyNumericCode = currency[0].currencyNumericCode;
+        destinationCurrency.currencyAlphaCode = currency[0].currencyAlphaCode;
+        destinationCurrency.currencyCountry = currency[0].currencyCountry;
+        destinationCurrency.currencyName = currency[0].currencyName;
+
+    });
+
+    let compact = 'ultra'; //optional
+    let query = originCurrencyAbbreviation + '_' + destinationCurrencyAbbreviation;
+    let apiUrl = 'http://free.currencyconverterapi.com/api/v6/convert?q=' + `${query}`;
     console.log(apiUrl);
 
     http.get(apiUrl, (resp) => {
@@ -169,14 +210,28 @@ server.app().get('/v1/exchanger/currency/price', function(request, response) {
           
         resp.on('end', () => {
             if( resp.statusCode >= 200 & resp.statusCode < 400 ){
-                if( originCurrency == null || destinationCurrency == null){
+                if( (originCurrencyAbbreviation == null || originCurrencyAbbreviation == "" ) && (destinationCurrencyAbbreviation == null || destinationCurrencyAbbreviation == "" ) ) {
                     response.json( JSON.parse( '{ "error" : "Empty params" }' ) );
                 } else{
-                    response.json(JSON.parse(data));
+                    
+                    originCurrency.amount = '1';
+
+                    console.log( JSON.parse(data) );
+                    console.log( JSON.parse(data).query );
+                    console.log( JSON.parse(data).results[`${query}`]['val'] );
+
+                    destinationCurrency.amount = JSON.parse(data).results[`${query}`]['val'] ;
+                    console.log(originCurrency);
+                    console.log(destinationCurrency);
+
+                    response.json({
+                        originCurrency,
+                        destinationCurrency
+                    });
                 }
                 
             }else if(resp.status == 400){
-                response.json(JSON.parse({
+                response.json(JSON.parse(400,{
                     "messages" : [
                         {
                         "path" : `${apiUrl}`,
@@ -191,6 +246,9 @@ server.app().get('/v1/exchanger/currency/price', function(request, response) {
             }
             
         });
+
+
+
   
         // If an error occured, return the error to the user
     }).on("error", (err) => {
