@@ -82,7 +82,7 @@ server.app().get('/v1/exchanger/', function(request, response) {
                     response.json( JSON.parse( '{ "error" : "Empty params" }' ) );
                 } else{
 
-                    destinationCurrency.amount = amount * parseInt(JSON.parse(data).results[`${query}`]['val'] , 10) ;
+                    destinationCurrency.amount = amount * parseFloat(JSON.parse(data).results[`${query}`]['val'] , 10) ;
 
                     response.json( destinationCurrency );
                 }
