@@ -17,11 +17,11 @@ const http = require('http');
  * @apiSuccessExample Success-Response:
  *      HTTP/1.1 200 Ok
  *      {
- *       "currencyNumericCode": <value>,
- *       "currencyDescription": <value>,
- *       "currencyAbbreviation": <value>,
- *       "currencySymbol": <value>,
- *       "amountConverted": <value>
+ *      "currencyNumericCode": "",
+ *      "currencyAlphaCode": "",
+ *      "currencyCountry": "",
+ *      "currencyName": "",
+ *      "amount": "
  *      }
  *
  *  @apiUse ParamValidationErrors
@@ -36,7 +36,85 @@ export function convertAmount(amount, originCurrency, destinationCurrency) {
 }
 */
 
+server.app().get('/v1/exchanger/', function(request, response) {
+    let originCurrencyAbbreviation = "";
+    originCurrencyAbbreviation = request.query.originCurrency;
+    let destinationCurrencyAbbreviation = "";
+    destinationCurrencyAbbreviation = request.query.destinationCurrency;
+    let amount = request.query.amount;
 
+    let destinationCurrency = {
+        "currencyNumericCode": "",
+        "currencyAlphaCode": "",
+        "currencyCountry": "",
+        "currencyName": "",
+        "amount": ""
+    }
+
+    server.Currency().find( { currencyAlphaCode: request.query.destinationCurrency } , function(error, currency){
+        if (error) return response.status(400).send(response.statusCode + " incorrect parameters in currencyAlphaCode.");
+        if (error) return response.status(500).send(error);
+
+        destinationCurrency.currencyNumericCode = currency[0].currencyNumericCode;
+        destinationCurrency.currencyAlphaCode = currency[0].currencyAlphaCode;
+        destinationCurrency.currencyCountry = currency[0].currencyCountry;
+        destinationCurrency.currencyName = currency[0].currencyName;
+
+    });
+
+    let compact = 'ultra'; //optional
+    let query = originCurrencyAbbreviation + '_' + destinationCurrencyAbbreviation;
+    let apiUrl = 'http://free.currencyconverterapi.com/api/v6/convert?q=' + `${query}`;
+    console.log(apiUrl);
+
+    http.get(apiUrl, (resp) => {
+
+        console.log('http in process');
+        let data = '';
+        // Concatinate each chunk of data
+        resp.on('data', (chunk) => {
+            data += chunk;
+        });
+          
+        resp.on('end', () => {
+            if( resp.statusCode >= 200 & resp.statusCode < 400 ){
+                if( (originCurrencyAbbreviation == null || originCurrencyAbbreviation == "" ) && (destinationCurrencyAbbreviation == null || destinationCurrencyAbbreviation == "" ) ) {
+                    response.json( JSON.parse( '{ "error" : "Empty params" }' ) );
+                } else{
+
+                    destinationCurrency.amount = amount * parseFloat(JSON.parse(data).results[`${query}`]['val'] , 10) ;
+
+                    response.json( destinationCurrency );
+                }
+                
+            }else if(resp.status == 400){
+                response.json(JSON.parse(400,{
+                    "messages" : [
+                        {
+                        "path" : `${apiUrl}`,
+                        "message" : `${resp.statusMessage}` 
+                        }
+                    ]
+                } ));
+            } else if(resp.status == 500){
+                resp.on('end', () => {
+                    response.json( JSON.parse( '{ "error" : "Not Found" }' ) );
+                });
+            }
+            
+        });
+
+
+
+  
+        // If an error occured, return the error to the user
+    }).on("error", (err) => {
+        response.json("Error: " + err.message);
+    });
+
+    
+
+});
 
 
 /**
@@ -216,13 +294,11 @@ server.app().get('/v1/exchanger/currency/price', function(request, response) {
                     
                     originCurrency.amount = '1';
 
-                    console.log( JSON.parse(data) );
+                   /*  console.log( JSON.parse(data) );
                     console.log( JSON.parse(data).query );
-                    console.log( JSON.parse(data).results[`${query}`]['val'] );
+                    console.log( JSON.parse(data).results[`${query}`]['val'] ); */
 
                     destinationCurrency.amount = JSON.parse(data).results[`${query}`]['val'] ;
-                    console.log(originCurrency);
-                    console.log(destinationCurrency);
 
                     response.json({
                         originCurrency,
