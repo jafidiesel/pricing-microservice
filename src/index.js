@@ -1,6 +1,7 @@
 //Vieja forma de importar modulos en node.js
 
 const exchanger = require('./exchanger');
+const CRUDCurrencies = require('./CRUDCurrencies');
 
 //import getQuote from "./exchanger.js";
 

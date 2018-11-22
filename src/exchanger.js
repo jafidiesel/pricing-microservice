@@ -133,12 +133,11 @@ server.app().get('/v1/exchanger/', function(request, response) {
  *          "articleId": <value>,
  *          "conversions": {
  *              {
- *                  "currencyId": <value>,
- *                  "currencyNumericCode": <value>,
- *                  "currencyDescription": <value>,
- *                  "currencyAbbreviation": <value>,
- *                  "currencySymbol": <value>,
- *                  "amountConverted": <value>
+ *              "currencyNumericCode": "",
+ *              "currencyAlphaCode": "",
+ *              "currencyCountry": "",
+ *              "currencyName": "",
+ *              "amountConverted": <value>
  *              },
  *              {...}
  *            }
@@ -152,8 +151,8 @@ server.app().get('/v1/exchanger/', function(request, response) {
 
 server.app().get('/v1/exchanger/articles/:articleId/', function(request, response) {
     let idArticle = request.query.idArticle;
-    let conversions = request.query.conversions;
-    console.log(conversions);
+    let alphaCodesReceived = request.query.conversions;
+    console.log(alphaCodesReceived);
 
     let destinationCurrency = {
         "currencyNumericCode": "",
@@ -162,10 +161,35 @@ server.app().get('/v1/exchanger/articles/:articleId/', function(request, respons
         "currencyName": "",
         "amount": ""
     }
-    let array = conversions.split(",");
+
+    let jsonResponse = {
+        "articleId": "",
+        "conversions": []
+    }
+
+    let alphaCodesReceivedArray = alphaCodesReceived.split(",");
+
+    for (let alphaCodeReceived of alphaCodesReceivedArray){
+        
+        server.Currency().find( { currencyAlphaCode: alphaCodeReceived } , function(error, currency){
+            if (error) return response.status(400).send(response.statusCode + " incorrect parameters in currencyAlphaCode.");
+            if (error) return response.status(500).send(error);
 
 
-    response.json( array );
+            jsonResponse["conversions"].push( {
+                "currencyNumericCode": currency[0].currencyNumericCode,
+                "currencyAlphaCode": currency[0].currencyAlphaCode,
+                "currencyCountry": currency[0].currencyCountry,
+                "currencyName": currency[0].currencyName,
+                "amount": ""
+            });
+
+            console.log(jsonResponse);
+        });
+    }
+
+
+    response.json( jsonResponse );
 /* 
     server.Currency().find( { currencyAlphaCode: request.query.destinationCurrency } , function(error, currency){
         if (error) return response.status(400).send(response.statusCode + " incorrect parameters in currencyAlphaCode.");
