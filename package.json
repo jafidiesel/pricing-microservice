@@ -1,32 +1,17 @@
 {
-  "name": "currencyexchange-microservice",
-  "version": "1.0.0",
-  "description": "Currency exchange microservice",
-  "main": "./src/index.js",
+  "name": "pricing-microservice",
+  "version": "0.0.0",
+  "private": true,
   "scripts": {
-    "build": "webpack"
+    "start": "node ./bin/www",
+    "start:dev": "DEBUG=pricing-microservice:* node ./bin/www"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/jafidiesel/CurrencyExchange-Microservice.git"
-  },
-  "keywords": [
-    "microservice"
-  ],
-  "author": "jafidiesel",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/jafidiesel/CurrencyExchange-Microservice/issues"
-  },
-  "homepage": "https://github.com/jafidiesel/CurrencyExchange-Microservice#readme",
-  "devDependencies": {
-    "@babel/core": "^7.1.2",
-    "@babel/preset-env": "^7.1.0",
-    "@babel/register": "^7.0.0",
-    "babel-loader": "^8.0.4",
-    "html-webpack-plugin": "^3.2.0",
-    "script-ext-html-webpack-plugin": "^2.0.1",
-    "webpack": "^4.20.2",
-    "webpack-cli": "^3.1.2"
+  "dependencies": {
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "http-errors": "~1.6.3",
+    "jade": "~1.11.0",
+    "morgan": "~1.9.1"
   }
 }

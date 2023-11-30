@@ -1,0 +1,11 @@
+1. levantar catalogo en python
+2. levantar mongo
+3. levantar rabbit
+4. levantar auth
+5. ver como maneja catalogo los articulos
+6. ver como maneja catalogo los precios de los articulos
+7. replicar estructura de articulo-precio para pricing
+8. hacer que catalogo le consulte el precio a pricing
+9. consultar cotizacion de un articulo por su precio en usd y guardarlo
+10. mandar un mensaje en rabbit de un nuevo precio de un articulo
+11. que diversos microservicios lean ese cambio de precio
